@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thở — Cùng vượt qua Burnout học đường</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#E63375;
+    --secondary:#2172D7;
+    --bg:#F4F5F7;
+    --text:#2C3B4E;
+    --soft:#E89FB2;
+    --surface:#FFFFFF;
+    --line:rgba(44,59,78,.12);
+    --shadow:0 10px 30px rgba(44,59,78,.08);
+    --radius:20px;
+    color-scheme: light;
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top,0px);
+    padding-bottom: env(safe-area-inset-bottom,0px);
+  }
+  *,*::before,*::after{box-sizing:inherit}
+  html{scroll-behavior:smooth; scroll-padding-top: calc(78px + env(safe-area-inset-top,0px));}
+  body{
+    margin:0;
+    font-family:'Be Vietnam Pro', system-ui, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-weight:800;line-height:1.15;margin:0}
+  h2{font-size:clamp(1.7rem,3vw,2.4rem)}
+  p{margin:0}
+  .eyebrow{font-weight:600;color:var(--primary);font-size:.95rem;margin-bottom:8px;display:inline-block}
+  button{font-family:inherit;cursor:pointer}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 26px;border-radius:100px;border:none;
+    font-weight:700;font-size:.98rem;transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:var(--primary);color:#fff;box-shadow:0 8px 20px rgba(230,51,117,.32)}
+  .btn-primary:hover{box-shadow:0 12px 26px rgba(230,51,117,.4)}
+  .btn-ghost{background:#fff;color:var(--text);border:1.5px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--secondary);color:var(--secondary)}
+  section{padding:88px 0}
+  .section-head{max-width:640px;margin-bottom:44px}
+  .section-head p{color:#5a6a7d;margin-top:12px;font-size:1.05rem}
+  :focus-visible{outline:3px solid var(--secondary);outline-offset:2px}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important}
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(244,245,247,.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding-top: env(safe-area-inset-top,0px);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1120px;margin:0 auto}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;text-decoration:none}
+  .logo-mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--primary),var(--secondary));flex-shrink:0}
+  nav ul{list-style:none;display:flex;gap:26px;margin:0;padding:0}
+  nav ul a{text-decoration:none;font-weight:600;font-size:.92rem;color:#5a6a7d}
+  nav ul a:hover{color:var(--primary)}
+  .nav-links{display:flex;align-items:center;gap:26px}
+  .nav-toggle{display:none;background:none;border:none;padding:6px}
+  @media (max-width:860px){
+    .nav-links{display:none}
+    .nav-toggle{display:block}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{padding:64px 0 40px}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .8fr;gap:56px;align-items:center}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+  .hero h1{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.01em}
+  .hero h1 span{color:var(--primary)}
+  .hero-sub{margin-top:20px;font-size:1.15rem;color:#4a5a6d;max-width:52ch}
+  .hero-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+  .dot{width:8px;height:8px;border-radius:50%;background:#2ecc71;animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(46,204,113,.5)}70%{box-shadow:0 0 0 7px rgba(46,204,113,0)}}
+
+  .pulse-visual{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+  .pulse-ring{position:absolute;border-radius:50%;border:1.5px solid var(--soft);opacity:.55}
+  .pulse-ring.r1{width:100%;height:100%;animation:breathe 6s ease-in-out infinite}
+  .pulse-ring.r2{width:72%;height:72%;animation:breathe 6s ease-in-out infinite .6s}
+  .pulse-ring.r3{width:46%;height:46%;background:linear-gradient(135deg,var(--primary),var(--secondary));border:none;opacity:1;animation:breathe 6s ease-in-out infinite 1.2s;display:flex;align-items:center;justify-content:center}
+  .pulse-ring.r3 span{color:#fff;font-weight:700;font-size:.85rem;text-align:center;padding:0 20px}
+  @keyframes breathe{0%,100%{transform:scale(.92)}50%{transform:scale(1.05)}}
+
+  /* ---------- CARD PANEL BASE ---------- */
+  .panel{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line)}
+
+  /* ---------- QUIZ ---------- */
+  .quiz-panel{padding:clamp(24px,4vw,48px)}
+  .quiz-progress-track{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:28px}
+  .quiz-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--secondary),var(--primary));transition:width .3s ease}
+  .q-block{margin-bottom:30px}
+  .q-block:last-of-type{margin-bottom:0}
+  .q-num{font-size:.82rem;font-weight:700;color:var(--secondary);letter-spacing:.02em}
+  .q-text{font-size:1.08rem;font-weight:600;margin-top:4px;margin-bottom:16px}
+  .likert{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+  @media (max-width:640px){.likert{grid-template-columns:repeat(4,1fr)}}
+  .likert label{position:relative}
+  .likert input{position:absolute;opacity:0;inset:0;cursor:pointer}
+  .likert .opt{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+    border:1.5px solid var(--line);border-radius:12px;padding:10px 4px;
+    font-size:.72rem;text-align:center;color:#6a7889;transition:.15s;min-height:64px
+  }
+  .likert .opt b{font-size:1rem;color:var(--text)}
+  .likert input:checked + .opt{border-color:var(--primary);background:rgba(230,51,117,.08);color:var(--primary)}
+  .likert input:checked + .opt b{color:var(--primary)}
+  .likert input:focus-visible + .opt{outline:3px solid var(--secondary);outline-offset:2px}
+  .quiz-actions{display:flex;justify-content:flex-end;margin-top:36px;gap:12px}
+  .quiz-note{font-size:.85rem;color:#8492a3;margin-top:10px}
+
+  .result{display:none;margin-top:8px}
+  .result.show{display:block}
+  .result-headline{font-size:1.5rem;font-weight:800;margin-bottom:6px}
+  .bar-row{margin:18px 0}
+  .bar-row .label{display:flex;justify-content:space-between;font-size:.88rem;font-weight:600;margin-bottom:6px}
+  .bar-track{height:12px;background:var(--line);border-radius:8px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:8px;width:0%;transition:width 1s cubic-bezier(.22,1,.36,1)}
+  .advice-box{background:rgba(33,114,215,.07);border:1px solid rgba(33,114,215,.18);border-radius:14px;padding:20px 22px;margin-top:24px}
+  .advice-box h4{margin:0 0 8px;font-size:1rem}
+
+  /* ---------- LIVE STATS ---------- */
+  .stats-strip{background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px}
+  @media (max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+  .stat-card{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:16px;padding:24px}
+  .stat-num{font-size:2.2rem;font-weight:800;color:var(--accent,var(--text))}
+  .stat-card:nth-child(1) .stat-num{--accent:var(--text)}
+  .stat-card:nth-child(2) .stat-num{--accent:var(--primary)}
+  .stat-card:nth-child(3) .stat-num{--accent:#c62a63}
+  .stat-card:nth-child(4) .stat-num{--accent:var(--secondary)}
+  .stat-label{font-size:.85rem;color:#5a6a7d;margin-top:4px}
+  .dist-wrap{margin-top:36px}
+  .dist-row{display:grid;grid-template-columns:180px 1fr 60px;align-items:center;gap:14px;margin-bottom:14px}
+  @media (max-width:640px){.dist-row{grid-template-columns:1fr;gap:6px}}
+  .dist-row .name{font-size:.9rem;font-weight:600}
+  .dist-track{height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+  .dist-fill{height:100%;border-radius:6px;width:0%;transition:width 1s ease}
+  .dist-pct{font-size:.85rem;text-align:right;color:#5a6a7d}
+  .live-badge{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;font-weight:600;color:#5a6a7d}
+
+  /* ---------- TIMER ---------- */
+  .timer-panel{padding:clamp(24px,4vw,44px);text-align:center;max-width:560px;margin:0 auto}
+  .tabs{display:flex;gap:8px;background:var(--bg);padding:6px;border-radius:100px;margin-bottom:32px}
+  .tab-btn{flex:1;border:none;background:none;padding:10px 8px;border-radius:100px;font-weight:700;font-size:.85rem;color:#6a7889}
+  .tab-btn.active{background:var(--text);color:#fff}
+  .timer-display{font-size:clamp(3.2rem,10vw,5rem);font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .timer-phase{font-weight:700;color:var(--primary);letter-spacing:.03em;margin-top:6px}
+  .custom-inputs{display:flex;gap:14px;justify-content:center;margin:18px 0}
+  .custom-inputs label{font-size:.82rem;color:#6a7889;display:flex;flex-direction:column;gap:6px}
+  .custom-inputs input{width:80px;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);font-size:1rem;text-align:center;font-family:inherit}
+  .timer-actions{display:flex;justify-content:center;gap:12px;margin-top:28px}
+  .icon-btn{width:56px;height:56px;border-radius:50%;border:none;background:var(--bg);display:flex;align-items:center;justify-content:center}
+  .icon-btn.primary{background:var(--primary);color:#fff}
+
+  /* ---------- RELAX SPOTS ---------- */
+  .spot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media (max-width:900px){.spot-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:640px){.spot-grid{grid-template-columns:1fr}}
+  .spot-card{padding:26px;display:flex;flex-direction:column;gap:12px}
+  .spot-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+  .spot-card h3{font-size:1.05rem}
+  .spot-card p{color:#5a6a7d;font-size:.92rem}
+  .spot-tag{display:inline-block;font-size:.75rem;font-weight:700;color:var(--secondary);background:rgba(33,114,215,.1);padding:4px 10px;border-radius:100px;width:fit-content}
+
+  /* ---------- VIDEO ---------- */
+  .video-wrap{max-width:820px;margin:0 auto}
+  .video-frame{position:relative;padding-top:56.25%;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+  /* ---------- PLANNER ---------- */
+  .planner-panel{padding:clamp(20px,3vw,36px);overflow-x:auto}
+  table.planner{width:100%;border-collapse:collapse;min-width:640px}
+  table.planner th{text-align:left;font-size:.78rem;color:#8492a3;font-weight:700;padding:10px 12px;border-bottom:2px solid var(--line)}
+  table.planner td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+  table.planner input[type=text]{border:none;background:none;font-family:inherit;font-size:.92rem;width:100%;color:var(--text)}
+  table.planner input[type=text]:focus{outline:none;background:var(--bg);border-radius:8px}
+  .day-check{width:20px;height:20px;accent-color:var(--primary)}
+  .planner-foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;flex-wrap:wrap;gap:10px}
+  .planner-foot small{color:#8492a3}
+
+  /* ---------- RELIEF TOOLS ---------- */
+  .relief-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media (max-width:860px){.relief-grid{grid-template-columns:1fr}}
+  .relief-panel{padding:clamp(24px,3vw,36px)}
+  .breath-circle-wrap{display:flex;flex-direction:column;align-items:center;padding:10px 0 4px}
+  .breath-circle{
+    width:150px;height:150px;border-radius:50%;
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;
+    transition:transform 4s ease-in-out;transform:scale(.75)
+  }
+  .breath-actions{margin-top:24px;display:flex;gap:12px}
+  .mood-row{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+  .mood-btn{font-size:1.6rem;background:var(--bg);border:1.5px solid transparent;border-radius:14px;padding:10px 14px}
+  .mood-btn.active{border-color:var(--primary);background:rgba(230,51,117,.08)}
+  .mood-note{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-family:inherit;font-size:.92rem;resize:vertical;min-height:70px}
+  .mood-tip{margin-top:16px;background:rgba(230,51,117,.07);border-radius:12px;padding:14px 16px;font-size:.9rem;display:none}
+  .mood-tip.show{display:block}
+
+  /* ---------- CHATBOT WIDGET ---------- */
+  .chat-toggle{
+    position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:80;
+    width:60px;height:60px;border-radius:50%;border:none;
+    background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;
+    box-shadow:0 10px 26px rgba(230,51,117,.4);display:flex;align-items:center;justify-content:center;font-size:1.5rem
+  }
+  .chat-window{
+    position:fixed;right:20px;bottom:calc(90px + env(safe-area-inset-bottom,0px));z-index:80;
+    width:min(360px, calc(100vw - 40px));height:min(480px, calc(100vh - 160px));
+    background:#fff;border-radius:20px;box-shadow:0 20px 50px rgba(44,59,78,.25);
+    display:none;flex-direction:column;overflow:hidden;border:1px solid var(--line)
+  }
+  .chat-window.open{display:flex}
+  .chat-head{background:var(--text);color:#fff;padding:16px 18px;display:flex;align-items:center;justify-content:space-between}
+  .chat-head strong{font-size:.95rem}
+  .chat-head small{display:block;color:#c4cede;font-size:.75rem;margin-top:2px}
+  .chat-close{background:none;border:none;color:#fff;font-size:1.2rem}
+  .chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+  .bubble{max-width:82%;padding:10px 14px;border-radius:14px;font-size:.88rem;line-height:1.45}
+  .bubble.bot{background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
+  .bubble.me{background:var(--primary);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+  .chat-input-row{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);background:#fff}
+  .chat-input-row input{flex:1;border:1.5px solid var(--line);border-radius:100px;padding:10px 16px;font-family:inherit;font-size:.88rem}
+  .chat-send{width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;border:none;flex-shrink:0}
+  .chat-send:disabled{opacity:.5}
+
+  /* ---------- FORM ---------- */
+  .form-wrap{max-width:760px;margin:0 auto}
+  .form-frame{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .form-frame iframe{width:100%;height:900px;border:0;display:block}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--text);color:#c4cede;padding:56px 0 32px}
+  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px}
+  .foot-grid h3{color:#fff;font-size:1.1rem}
+  .foot-grid p{margin-top:10px;font-size:.9rem;max-width:36ch}
+  .foot-links{display:flex;gap:18px;list-style:none;padding:0;margin:14px 0 0}
+  .foot-links a{text-decoration:none;font-size:.88rem;color:#c4cede}
+  .foot-links a:hover{color:#fff}
+  .foot-bottom{margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.12);font-size:.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#top" class="logo"><span class="logo-mark"></span>Thở</a>
+    <div class="nav-links">
+      <nav><ul>
+        <li><a href="#quiz">Kiểm tra</a></li>
+        <li><a href="#stats">Số liệu</a></li>
+        <li><a href="#timer">Bấm giờ</a></li>
+        <li><a href="#spots">Trạm sạc</a></li>
+        <li><a href="#relief">Thư giãn</a></li>
+        <li><a href="#form">Góp ý</a></li>
+      </ul></nav>
+      <a href="#" class="btn btn-ghost" style="padding:9px 18px;font-size:.85rem">Xem poster nhóm</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Dành cho học sinh đang quá tải</span>
+        <h1>Một hơi thở sâu, có kiểm soát là <span>phương thuốc tự nhiên</span>, miễn phí và mạnh mẽ nhất để chữa lành mọi sự lo âu.</h1>
+        <p class="hero-sub">Burnout học đường không phải là yếu đuối — đó là tín hiệu cơ thể xin được nghỉ. Thở giúp bạn đo mức năng lượng, tìm chỗ nạp lại, và lên kế hoạch học tập không kiệt sức.</p>
+        <div class="hero-cta">
+          <a href="#quiz" class="btn btn-primary">Đo mức burnout của bạn</a>
+          <a href="#" class="btn btn-ghost">Poster của nhóm</a>
+        </div>
+      </div>
+      <div class="pulse-visual" aria-hidden="true">
+        <div class="pulse-ring r1"></div>
+        <div class="pulse-ring r2"></div>
+        <div class="pulse-ring r3"><span>Hít vào… thở ra…</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 1: MBI-SS QUIZ -->
+  <section id="quiz">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Bài kiểm tra</span>
+        <h2>Mức độ Burnout của bạn đang ở đâu?</h2>
+        <p>15 câu hỏi dựa trên thang đo chuẩn MBI-SS (Maslach Burnout Inventory – Student Survey), đo 3 khía cạnh: kiệt sức, thờ ơ và hiệu quả học tập. Trả lời thật, không có câu đúng/sai.</p>
+      </div>
+
+      <div class="panel quiz-panel">
+        <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+        <form id="quizForm"></form>
+        <div class="quiz-actions">
+          <button type="button" class="btn btn-primary" id="quizSubmit">Xem kết quả</button>
+        </div>
+        <p class="quiz-note">Kết quả chỉ mang tính tham khảo, không thay thế chẩn đoán tâm lý chuyên môn.</p>
+
+        <div class="result" id="quizResult">
+          <hr style="border:none;border-top:1px solid var(--line);margin:36px 0">
+          <span class="eyebrow" id="resultLevelTag">Kết quả của bạn</span>
+          <div class="result-headline" id="resultHeadline">—</div>
+          <p id="resultDesc" style="color:#5a6a7d"></p>
+
+          <div class="bar-row">
+            <div class="label"><span>Kiệt sức (Exhaustion)</span><span id="exScoreLbl">0/6</span></div>
+            <div class="bar-track"><div class="bar-fill" id="exBar" style="background:var(--primary)"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="label"><span>Thờ ơ / Tiêu cực (Cynicism)</span><span id="cyScoreLbl">0/6</span></div>
+            <div class="bar-track"><div class="bar-fill" id="cyBar" style="background:#c62a63"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="label"><span>Hiệu quả học tập (Efficacy)</span><span id="peScoreLbl">0/6</span></div>
+            <div class="bar-track"><div class="bar-fill" id="peBar" style="background:var(--secondary)"></div></div>
+          </div>
+
+          <div class="advice-box">
+            <h4 id="adviceTitle">Lời khuyên dành riêng cho bạn</h4>
+            <p id="adviceBody"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE STATS -->
+  <section id="stats" class="stats-strip">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Cộng đồng Thở</span>
+        <h2>Số liệu khảo sát thời gian thực</h2>
+        <p>Mỗi lượt làm bài kiểm tra ở trên sẽ cập nhật trực tiếp vào số liệu chung — ẩn danh, không lưu tên.</p>
+        <div class="live-badge" style="margin-top:14px"><span class="dot"></span><span id="statsLiveLabel">Đang chờ dữ liệu…</span></div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Lượt khảo sát đã ghi nhận</div></div>
+        <div class="stat-card"><div class="stat-num" id="statAvgEx">0.0</div><div class="stat-label">Điểm Kiệt sức trung bình /6</div></div>
+        <div class="stat-card"><div class="stat-num" id="statAvgCy">0.0</div><div class="stat-label">Điểm Thờ ơ trung bình /6</div></div>
+        <div class="stat-card"><div class="stat-num" id="statAvgPe">0.0</div><div class="stat-label">Điểm Hiệu quả trung bình /6</div></div>
+      </div>
+
+      <div class="dist-wrap">
+        <div class="dist-row">
+          <span class="name">🟢 Bình thường (An toàn)</span>
+          <div class="dist-track"><div class="dist-fill" id="distLow" style="background:#2ecc71"></div></div>
+          <span class="dist-pct" id="distLowPct">0%</span>
+        </div>
+        <div class="dist-row">
+          <span class="name">🟡 Nguy cơ trung bình</span>
+          <div class="dist-track"><div class="dist-fill" id="distMed" style="background:#f4b942"></div></div>
+          <span class="dist-pct" id="distMedPct">0%</span>
+        </div>
+        <div class="dist-row">
+          <span class="name">🔴 Mức độ cao</span>
+          <div class="dist-track"><div class="dist-fill" id="distHigh" style="background:var(--primary)"></div></div>
+          <span class="dist-pct" id="distHighPct">0%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: TIMER -->
+  <section id="timer">
+    <div class="wrap">
+      <div class="section-head" style="margin-left:auto;margin-right:auto;text-align:center">
+        <span class="eyebrow">Bấm giờ học tập</span>
+        <h2>Học có nhịp, nghỉ có giờ</h2>
+        <p>Chọn nhịp học phù hợp với bạn — mỗi khoảng nghỉ là một lần sạc lại.</p>
+      </div>
+
+      <div class="panel timer-panel">
+        <div class="tabs" role="tablist">
+          <button class="tab-btn active" data-mode="pomodoro">Pomodoro 25/5</button>
+          <button class="tab-btn" data-mode="fifty">50/10</button>
+          <button class="tab-btn" data-mode="custom">Tuỳ chỉnh</button>
+        </div>
+
+        <div id="customInputs" class="custom-inputs" style="display:none">
+          <label>Học (phút)<input type="number" id="customWork" min="1" max="180" value="30"></label>
+          <label>Nghỉ (phút)<input type="number" id="customRest" min="1" max="60" value="8"></label>
+        </div>
+
+        <div class="timer-phase" id="timerPhase">PHIÊN HỌC TẬP</div>
+        <div class="timer-display" id="timerDisplay">25:00</div>
+
+        <div class="timer-actions">
+          <button class="icon-btn" id="timerReset" title="Đặt lại">↺</button>
+          <button class="icon-btn primary" id="timerToggle" title="Bắt đầu">▶</button>
+          <button class="icon-btn" id="timerSkip" title="Bỏ qua">⏭</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: RELAX SPOTS -->
+  <section id="spots">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Trạm sạc tâm lý</span>
+        <h2>Những chỗ để bạn chậm lại</h2>
+        <p>Gợi ý địa điểm hỗ trợ tinh thần và không gian thư giãn quanh khu vực học tập.</p>
+      </div>
+
+      <div class="spot-grid">
+        <div class="panel spot-card">
+          <div class="spot-icon" style="background:rgba(230,51,117,.12)">🧑‍⚕️</div>
+          <span class="spot-tag">Tư vấn học đường</span>
+          <h3>Phòng Tham vấn Tâm lý học đường</h3>
+          <p>Gặp chuyên viên tâm lý của trường để chia sẻ áp lực học tập, hoàn toàn bảo mật.</p>
+        </div>
+        <div class="panel spot-card">
+          <div class="spot-icon" style="background:rgba(33,114,215,.12)">☕</div>
+          <span class="spot-tag">Không gian yên tĩnh</span>
+          <h3>Quán cà phê sách gần trường</h3>
+          <p>Không gian yên tĩnh để đọc, viết nhật ký hoặc ngồi một mình sau giờ học căng thẳng.</p>
+        </div>
+        <div class="panel spot-card">
+          <div class="spot-icon" style="background:rgba(46,204,113,.14)">🌳</div>
+          <span class="spot-tag">Ngoài trời</span>
+          <h3>Công viên cây xanh khu vực</h3>
+          <p>Đi bộ 15 phút giữa cây xanh giúp giảm cortisol và làm dịu hệ thần kinh hiệu quả.</p>
+        </div>
+        <div class="panel spot-card">
+          <div class="spot-icon" style="background:rgba(230,159,178,.25)">📞</div>
+          <span class="spot-tag">Đường dây nóng</span>
+          <h3>Tổng đài hỗ trợ tâm lý học sinh</h3>
+          <p>Đường dây lắng nghe miễn phí khi bạn cần nói chuyện ngay, ngoài giờ hành chính.</p>
+        </div>
+        <div class="panel spot-card">
+          <div class="spot-icon" style="background:rgba(244,185,66,.2)">🧘</div>
+          <span class="spot-tag">Vận động nhẹ</span>
+          <h3>Lớp yoga / thiền cộng đồng</h3>
+          <p>Các buổi yoga miễn phí hoặc chi phí thấp dành cho học sinh vào cuối tuần.</p>
+        </div>
+        <div class="panel spot-card">
+          <div class="spot-icon" style="background:rgba(33,114,215,.12)">📚</div>
+          <span class="spot-tag">Góc học nhóm</span>
+          <h3>Thư viện cộng đồng</h3>
+          <p>Không gian học nhóm thoải mái, ít áp lực hơn phòng học chính khoá.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: VIDEO -->
+  <section id="video">
+    <div class="wrap video-wrap">
+      <div class="section-head" style="text-align:center;margin-left:auto;margin-right:auto">
+        <span class="eyebrow">Góc video làm dịu</span>
+        <h2>Dành 5 phút để thở cùng bạn</h2>
+        <p>Một bài thiền ngắn giúp hạ nhịp tim và làm dịu tâm trí trước khi quay lại bàn học.</p>
+      </div>
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/inpok4MKVLM" title="Thiền giảm căng thẳng" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: PLANNER -->
+  <section id="planner">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Kế hoạch tuần</span>
+        <h2>Tuần này, bạn nạp năng lượng ở đâu?</h2>
+        <p>Đánh dấu những việc giúp bạn phục hồi mỗi ngày. Dữ liệu được lưu ngay trên máy của bạn.</p>
+      </div>
+      <div class="panel planner-panel">
+        <table class="planner" id="plannerTable">
+          <thead>
+            <tr><th style="width:26%">Việc nạp năng lượng</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>CN</th></tr>
+          </thead>
+          <tbody id="plannerBody"></tbody>
+        </table>
+        <div class="planner-foot">
+          <small>Ví dụ: ngủ đủ 8 tiếng, đi bộ 15 phút, gặp bạn thân, tắt điện thoại 1 giờ…</small>
+          <button class="btn btn-ghost" id="plannerAddRow" style="padding:9px 18px;font-size:.85rem">+ Thêm dòng</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: RELIEF TOOLS -->
+  <section id="relief">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Công cụ thư giãn nhanh</span>
+        <h2>Chỉ cần 60 giây</h2>
+        <p>Hai công cụ nhỏ để bạn lấy lại nhịp thở và gọi tên cảm xúc của mình.</p>
+      </div>
+
+      <div class="relief-grid">
+        <div class="panel relief-panel">
+          <h3>Hít thở 4‑7‑8</h3>
+          <p style="color:#5a6a7d;margin-top:6px;font-size:.92rem">Hít vào 4 giây, giữ 7 giây, thở ra 8 giây. Lặp lại 4 vòng.</p>
+          <div class="breath-circle-wrap">
+            <div class="breath-circle" id="breathCircle">Bắt đầu</div>
+          </div>
+          <div class="breath-actions">
+            <button class="btn btn-primary" id="breathStart">Bắt đầu hít thở</button>
+            <button class="btn btn-ghost" id="breathStop" style="display:none">Dừng lại</button>
+          </div>
+        </div>
+
+        <div class="panel relief-panel">
+          <h3>Nhật ký cảm xúc nhanh</h3>
+          <p style="color:#5a6a7d;margin-top:6px;font-size:.92rem">Hôm nay bạn cảm thấy thế nào?</p>
+          <div class="mood-row" id="moodRow">
+            <button class="mood-btn" data-mood="great">😄</button>
+            <button class="mood-btn" data-mood="ok">🙂</button>
+            <button class="mood-btn" data-mood="meh">😐</button>
+            <button class="mood-btn" data-mood="tired">😮‍💨</button>
+            <button class="mood-btn" data-mood="down">😞</button>
+          </div>
+          <textarea class="mood-note" id="moodNote" placeholder="Viết một câu về hôm nay của bạn (không bắt buộc)…"></textarea>
+          <div style="margin-top:12px"><button class="btn btn-ghost" id="moodSave" style="padding:9px 18px;font-size:.85rem">Lưu lại</button></div>
+          <div class="mood-tip" id="moodTip"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: GOOGLE FORM -->
+  <section id="form">
+    <div class="wrap form-wrap">
+      <div class="section-head" style="text-align:center;margin-left:auto;margin-right:auto">
+        <span class="eyebrow">Khảo sát &amp; góp ý</span>
+        <h2>Giúp nhóm hiểu bạn hơn</h2>
+        <p>Vài phút góp ý của bạn sẽ giúp Thở hoàn thiện hơn cho các bạn học sinh khác.</p>
+      </div>
+      <div class="form-frame">
+        <iframe src="https://docs.google.com/forms/d/e/933KkALPQFv678Af7/viewform?embedded=true" title="Google Form khảo sát góp ý">Đang tải form…</iframe>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h3>Thở</h3>
+        <p>Một dự án học sinh vì học sinh — vì bạn xứng đáng học tập mà không kiệt sức.</p>
+      </div>
+      <div>
+        <h3>Liên kết</h3>
+        <ul class="foot-links">
+          <li><a href="#">Poster nhóm</a></li>
+          <li><a href="#form">Góp ý</a></li>
+          <li><a href="#quiz">Làm bài kiểm tra</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Nhóm dự án Thở. Được làm với sự thấu cảm.</span>
+      <span>Chúc bạn một ngày nhẹ nhõm và đủ năng lượng 🌤️</span>
+    </div>
+  </div>
+</footer>
+
+<!-- CHATBOT WIDGET -->
+<button class="chat-toggle" id="chatToggle" aria-label="Mở trợ lý phục hồi burnout">💬</button>
+<div class="chat-window" id="chatWindow">
+  <div class="chat-head">
+    <div>
+      <strong>Trợ lý Thở</strong>
+      <small>Luôn ở đây để lắng nghe bạn</small>
+    </div>
+    <button class="chat-close" id="chatClose" aria-label="Đóng">✕</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Bạn đang cảm thấy thế nào?">
+    <button class="chat-send" id="chatSend" aria-label="Gửi">➤</button>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= MBI-SS QUIZ ================= */
+const QUESTIONS = [
+  {t:"ex", text:"Bạn cảm thấy kiệt sức vì việc học."},
+  {t:"ex", text:"Bạn cảm thấy mệt mỏi ngay khi thức dậy và nghĩ đến một ngày học tập mới."},
+  {t:"ex", text:"Học cả ngày thực sự là điều rất căng thẳng đối với bạn."},
+  {t:"ex", text:"Bạn cảm thấy như đã 'cháy sạch' năng lượng vì việc học."},
+  {t:"ex", text:"Bạn cảm thấy kiệt quệ về mặt tinh thần vì việc học."},
+  {t:"cy", text:"Bạn ngày càng mất hứng thú với việc học."},
+  {t:"cy", text:"Bạn ngày càng ít nhiệt tình với việc học hơn trước đây."},
+  {t:"cy", text:"Bạn hoài nghi về ý nghĩa thực sự của việc học đối với mình."},
+  {t:"cy", text:"Bạn thấy việc học ở trường không còn quan trọng với bạn nữa."},
+  {t:"pe", text:"Bạn có thể giải quyết hiệu quả các vấn đề nảy sinh trong việc học."},
+  {t:"pe", text:"Bạn cảm thấy mình đang đóng góp hiệu quả trong các buổi học/lớp học."},
+  {t:"pe", text:"Theo đánh giá của bạn, bạn là một học sinh khá giỏi."},
+  {t:"pe", text:"Bạn cảm thấy hứng thú khi hoàn thành tốt một nhiệm vụ học tập."},
+  {t:"pe", text:"Bạn đã học được nhiều điều thú vị trong quá trình học tập gần đây."},
+  {t:"pe", text:"Trong các buổi học, bạn tự tin rằng mình đang học hiệu quả."}
+];
+const LIKERT = [
+  {v:0,l:"Không bao giờ"},{v:1,l:"Hiếm khi"},{v:2,l:"Thỉnh thoảng"},{v:3,l:"Đều đặn"},
+  {v:4,l:"Thường xuyên"},{v:5,l:"Rất thường xuyên"},{v:6,l:"Hàng ngày"}
+];
+
+const quizForm = document.getElementById('quizForm');
+QUESTIONS.forEach((q,i)=>{
+  const block = document.createElement('div');
+  block.className = 'q-block';
+  block.innerHTML = `
+    <div class="q-num">CÂU ${i+1} / ${QUESTIONS.length}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="likert" role="radiogroup" aria-label="Câu ${i+1}">
+      ${LIKERT.map(o=>`
+        <label>
+          <input type="radio" name="q${i}" value="${o.v}" data-idx="${i}">
+          <span class="opt"><b>${o.v}</b>${o.l}</span>
+        </label>`).join('')}
+    </div>`;
+  quizForm.appendChild(block);
+});
+
+function updateProgress(){
+  const answered = new Set([...quizForm.querySelectorAll('input:checked')].map(i=>i.dataset.idx)).size;
+  document.getElementById('quizProgress').style.width = (answered/QUESTIONS.length*100)+'%';
+}
+quizForm.addEventListener('change', updateProgress);
+
+function levelOf(kind, avg){
+  if(kind==='ex') return avg<2 ? 0 : (avg<=3.5 ? 1 : 2);
+  if(kind==='cy') return avg<1.5 ? 0 : (avg<=3 ? 1 : 2);
+  // pe: higher is better, so risk is inverted
+  return avg>4 ? 0 : (avg>=2.5 ? 1 : 2);
+}
+const LEVEL_LABEL = ["Bình thường (An toàn)","Nguy cơ trung bình (Chớm burnout)","Mức độ cao (Kiệt sức nghiêm trọng)"];
+const LEVEL_DESC = [
+  "Các chỉ số của bạn đang ở mức cân bằng. Cứ tiếp tục giữ nhịp học – nghỉ như hiện tại nhé.",
+  "Bạn đang có vài dấu hiệu chớm quá tải. Đây là lúc tốt để điều chỉnh trước khi nó nặng hơn.",
+  "Các chỉ số cho thấy bạn đang kiệt sức đáng kể. Hãy nghiêm túc dành thời gian nghỉ ngơi và tìm người hỗ trợ."
+];
+
+function adviceFor(exAvg,cyAvg,peAvg,exLvl,cyLvl,peLvl){
+  // pick the worst-contributing dimension
+  const scores = [{k:'ex',l:exLvl},{k:'cy',l:cyLvl},{k:'pe',l:peLvl}];
+  scores.sort((a,b)=>b.l-a.l);
+  const worst = scores[0].k;
+  if(worst==='ex') return {
+    title:"Ưu tiên: Phục hồi năng lượng",
+    body:"Khía cạnh kiệt sức đang cao nhất ở bạn. Hãy ưu tiên ngủ đủ 7–8 tiếng, tách các phiên học thành đoạn ngắn có nghỉ giữa giờ (thử mục Bấm giờ học tập bên dưới), và xin phép giảm bớt một hoạt động không thật sự cần thiết trong tuần này."
+  };
+  if(worst==='cy') return {
+    title:"Ưu tiên: Tìm lại động lực",
+    body:"Bạn đang có dấu hiệu thờ ơ, mất hứng thú với việc học. Thử đổi phương pháp học (học nhóm, học qua thực hành thay vì chỉ đọc), đặt một mục tiêu nhỏ có ý nghĩa với riêng bạn, và nói chuyện với người bạn tin tưởng về điều đang khiến bạn chán nản."
+  };
+  return {
+    title:"Ưu tiên: Củng cố sự tự tin",
+    body:"Hiệu quả học tập mà bạn cảm nhận đang thấp. Hãy bắt đầu từ những nhiệm vụ nhỏ dễ hoàn thành để lấy lại cảm giác 'mình làm được', ghi lại những điều bạn đã học tốt mỗi ngày, và đừng ngại nhờ thầy cô hoặc bạn bè giải thích lại phần khó."
+  };
+}
+
+let lastResult = null;
+
+document.getElementById('quizSubmit').addEventListener('click', ()=>{
+  const answers = new Array(QUESTIONS.length).fill(null);
+  let missing = 0;
+  QUESTIONS.forEach((_,i)=>{
+    const checked = quizForm.querySelector(`input[name="q${i}"]:checked`);
+    if(checked) answers[i] = Number(checked.value); else missing++;
+  });
+  if(missing>0){
+    alert(`Bạn còn ${missing} câu chưa trả lời. Hãy hoàn thành hết để có kết quả chính xác nhé!`);
+    return;
+  }
+  const sums = {ex:0,cy:0,pe:0};
+  const counts = {ex:0,cy:0,pe:0};
+  QUESTIONS.forEach((q,i)=>{ sums[q.t]+=answers[i]; counts[q.t]++; });
+  const exAvg = sums.ex/counts.ex, cyAvg = sums.cy/counts.cy, peAvg = sums.pe/counts.pe;
+  const exLvl = levelOf('ex',exAvg), cyLvl = levelOf('cy',cyAvg), peLvl = levelOf('pe',peAvg);
+  const overall = Math.max(exLvl,cyLvl,peLvl);
+
+  document.getElementById('resultLevelTag').textContent = "Kết quả của bạn";
+  document.getElementById('resultHeadline').textContent = LEVEL_LABEL[overall];
+  document.getElementById('resultDesc').textContent = LEVEL_DESC[overall];
+
+  document.getElementById('exScoreLbl').textContent = exAvg.toFixed(1)+'/6';
+  document.getElementById('cyScoreLbl').textContent = cyAvg.toFixed(1)+'/6';
+  document.getElementById('peScoreLbl').textContent = peAvg.toFixed(1)+'/6';
+  requestAnimationFrame(()=>{
+    document.getElementById('exBar').style.width = (exAvg/6*100)+'%';
+    document.getElementById('cyBar').style.width = (cyAvg/6*100)+'%';
+    document.getElementById('peBar').style.width = (peAvg/6*100)+'%';
+  });
+
+  const adv = adviceFor(exAvg,cyAvg,peAvg,exLvl,cyLvl,peLvl);
+  document.getElementById('adviceTitle').textContent = adv.title;
+  document.getElementById('adviceBody').textContent = adv.body;
+
+  document.getElementById('quizResult').classList.add('show');
+  document.getElementById('quizResult').scrollIntoView({behavior:'smooth', block:'start'});
+
+  lastResult = {ex:exAvg, cy:cyAvg, pe:peAvg, level:overall, ts: Date.now()};
+  submitToLiveStats(lastResult);
+});
+
+/* ================= LIVE STATS (db capability) ================= */
+let statsCache = {total:0, sumEx:0, sumCy:0, sumPe:0, low:0, med:0, high:0};
+
+function renderStats(){
+  const t = statsCache.total;
+  document.getElementById('statTotal').textContent = t;
+  document.getElementById('statAvgEx').textContent = t? (statsCache.sumEx/t).toFixed(1) : '0.0';
+  document.getElementById('statAvgCy').textContent = t? (statsCache.sumCy/t).toFixed(1) : '0.0';
+  document.getElementById('statAvgPe').textContent = t? (statsCache.sumPe/t).toFixed(1) : '0.0';
+  const pct = n => t? Math.round(n/t*100) : 0;
+  document.getElementById('distLow').style.width = pct(statsCache.low)+'%';
+  document.getElementById('distMed').style.width = pct(statsCache.med)+'%';
+  document.getElementById('distHigh').style.width = pct(statsCache.high)+'%';
+  document.getElementById('distLowPct').textContent = pct(statsCache.low)+'%';
+  document.getElementById('distMedPct').textContent = pct(statsCache.med)+'%';
+  document.getElementById('distHighPct').textContent = pct(statsCache.high)+'%';
+  document.getElementById('statsLiveLabel').textContent = t
+    ? `Cập nhật trực tiếp • ${t} lượt khảo sát`
+    : 'Cập nhật trực tiếp • chưa có dữ liệu';
+}
+renderStats();
+
+let dbApi = null;
+let submitFallback = () => {
+  // no db capability available: reflect only this visitor's own submission locally
+  statsCache.total += 1;
+  statsCache.sumEx += lastResult.ex; statsCache.sumCy += lastResult.cy; statsCache.sumPe += lastResult.pe;
+  if(lastResult.level===0) statsCache.low++; else if(lastResult.level===1) statsCache.med++; else statsCache.high++;
+  renderStats();
+};
+
+function submitToLiveStats(result){
+  if(dbApi){
+    dbApi.collection('submissions').add({
+      ex: result.ex, cy: result.cy, pe: result.pe, level: result.level, ts: result.ts
+    }).catch(()=>{ submitFallback(); });
+  } else {
+    submitFallback();
+  }
+}
+
+(async function initDb(){
+  try{
+    if(!window.claude || !window.claude.use){ document.getElementById('statsLiveLabel').textContent='Chưa có dữ liệu chung'; return; }
+    const db = await window.claude.use('db');
+    if(!db){ document.getElementById('statsLiveLabel').textContent='Chưa có dữ liệu chung'; return; }
+    dbApi = db;
+    const q = db.collection('submissions').orderBy('ts','desc').limit(1000);
+    q.onSnapshot((snap)=>{
+      const next = {total:0, sumEx:0, sumCy:0, sumPe:0, low:0, med:0, high:0};
+      snap.docs.forEach(d=>{
+        const v = d.data();
+        if(typeof v.ex!=='number') return;
+        next.total++; next.sumEx+=v.ex; next.sumCy+=v.cy; next.sumPe+=v.pe;
+        if(v.level===0) next.low++; else if(v.level===1) next.med++; else next.high++;
+      });
+      statsCache = next;
+      renderStats();
+    }, ()=>{ document.getElementById('statsLiveLabel').textContent='Không thể tải dữ liệu chung'; });
+  }catch(e){
+    document.getElementById('statsLiveLabel').textContent='Chưa có dữ liệu chung';
+  }
+})();
+
+/* ================= TIMER ================= */
+const MODES = {
+  pomodoro: {work:25*60, rest:5*60},
+  fifty: {work:50*60, rest:10*60},
+  custom: {work:30*60, rest:8*60}
+};
+let mode = 'pomodoro';
+let phase = 'work';
+let remaining = MODES.pomodoro.work;
+let running = false;
+let tickHandle = null;
+
+const timerDisplay = document.getElementById('timerDisplay');
+const timerPhase = document.getElementById('timerPhase');
+const timerToggle = document.getElementById('timerToggle');
+const customInputs = document.getElementById('customInputs');
+
+function fmt(s){ const m=Math.floor(s/60), r=s%60; return String(m).padStart(2,'0')+':'+String(r).padStart(2,'0'); }
+function renderTimer(){
+  timerDisplay.textContent = fmt(remaining);
+  timerPhase.textContent = phase==='work' ? 'PHIÊN HỌC TẬP' : 'GIỜ NGHỈ';
+}
+function resetTimer(){
+  running=false; clearInterval(tickHandle); timerToggle.textContent='▶';
+  phase='work';
+  remaining = MODES[mode].work;
+  renderTimer();
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    mode = btn.dataset.mode;
+    customInputs.style.display = mode==='custom' ? 'flex' : 'none';
+    if(mode==='custom') syncCustom();
+    resetTimer();
+  });
+});
+function syncCustom(){
+  const w = Math.max(1, Math.min(180, Number(document.getElementById('customWork').value)||30));
+  const r = Math.max(1, Math.min(60, Number(document.getElementById('customRest').value)||8));
+  MODES.custom.work = w*60; MODES.custom.rest = r*60;
+}
+document.getElementById('customWork').addEventListener('change', ()=>{ syncCustom(); if(mode==='custom') resetTimer(); });
+document.getElementById('customRest').addEventListener('change', ()=>{ syncCustom(); if(mode==='custom') resetTimer(); });
+
+timerToggle.addEventListener('click', ()=>{
+  running = !running;
+  timerToggle.textContent = running ? '⏸' : '▶';
+  if(running){
+    tickHandle = setInterval(()=>{
+      remaining--;
+      if(remaining<=0){
+        phase = phase==='work' ? 'rest' : 'work';
+        remaining = MODES[mode][phase];
+      }
+      renderTimer();
+    },1000);
+  } else {
+    clearInterval(tickHandle);
+  }
+});
+document.getElementById('timerReset').addEventListener('click', resetTimer);
+document.getElementById('timerSkip').addEventListener('click', ()=>{
+  phase = phase==='work' ? 'rest' : 'work';
+  remaining = MODES[mode][phase];
+  renderTimer();
+});
+renderTimer();
+
+/* ================= WEEKLY PLANNER (localStorage — per-viewer only) ================= */
+const DAYS = 7;
+const plannerBody = document.getElementById('plannerBody');
+let plannerData = [];
+try{ plannerData = JSON.parse(localStorage.getItem('saclai_planner')||'[]'); }catch(e){ plannerData=[]; }
+if(!plannerData.length){
+  plannerData = [
+    {label:'Ngủ đủ 8 tiếng', days:[false,false,false,false,false,false,false]},
+    {label:'Đi bộ / vận động 15 phút', days:[false,false,false,false,false,false,false]},
+    {label:'Gặp gỡ bạn bè, người thân', days:[false,false,false,false,false,false,false]}
+  ];
+}
+function savePlanner(){ try{ localStorage.setItem('saclai_planner', JSON.stringify(plannerData)); }catch(e){} }
+function renderPlanner(){
+  plannerBody.innerHTML='';
+  plannerData.forEach((row,ri)=>{
+    const tr = document.createElement('tr');
+    let cells = `<td><input type="text" value="${row.label.replace(/"/g,'&quot;')}" data-row="${ri}" class="planner-label"></td>`;
+    for(let d=0; d<DAYS; d++){
+      cells += `<td style="text-align:center"><input type="checkbox" class="day-check" data-row="${ri}" data-day="${d}" ${row.days[d]?'checked':''}></td>`;
+    }
+    tr.innerHTML = cells;
+    plannerBody.appendChild(tr);
+  });
+}
+renderPlanner();
+plannerBody.addEventListener('change', (e)=>{
+  const t = e.target;
+  if(t.classList.contains('day-check')){
+    plannerData[t.dataset.row].days[t.dataset.day] = t.checked;
+    savePlanner();
+  }
+});
+plannerBody.addEventListener('input', (e)=>{
+  const t = e.target;
+  if(t.classList.contains('planner-label')){
+    plannerData[t.dataset.row].label = t.value;
+    savePlanner();
+  }
+});
+document.getElementById('plannerAddRow').addEventListener('click', ()=>{
+  plannerData.push({label:'', days:[false,false,false,false,false,false,false]});
+  savePlanner(); renderPlanner();
+});
+
+/* ================= BREATHING 4-7-8 ================= */
+const breathCircle = document.getElementById('breathCircle');
+const breathStart = document.getElementById('breathStart');
+const breathStop = document.getElementById('breathStop');
+let breathTimer = null, breathRound = 0;
+const BREATH_STEPS = [
+  {label:'Hít vào', ms:4000, scale:1.35},
+  {label:'Giữ hơi', ms:7000, scale:1.35},
+  {label:'Thở ra', ms:8000, scale:.75}
+];
+function runBreathStep(i){
+  const step = BREATH_STEPS[i % BREATH_STEPS.length];
+  breathCircle.style.transition = `transform ${step.ms/1000}s ease-in-out`;
+  breathCircle.style.transform = `scale(${step.scale})`;
+  breathCircle.textContent = step.label;
+  breathTimer = setTimeout(()=>{
+    if(i % BREATH_STEPS.length === BREATH_STEPS.length-1){
+      breathRound++;
+      if(breathRound>=4){ stopBreathing(); return; }
+    }
+    runBreathStep(i+1);
+  }, step.ms);
+}
+function stopBreathing(){
+  clearTimeout(breathTimer);
+  breathCircle.style.transition='transform .6s ease';
+  breathCircle.style.transform='scale(.75)';
+  breathCircle.textContent='Bắt đầu';
+  breathStart.style.display='inline-flex';
+  breathStop.style.display='none';
+}
+breathStart.addEventListener('click', ()=>{
+  breathRound=0;
+  breathStart.style.display='none';
+  breathStop.style.display='inline-flex';
+  runBreathStep(0);
+});
+breathStop.addEventListener('click', stopBreathing);
+
+/* ================= MOOD TRACKER (localStorage — per-viewer only) ================= */
+let selectedMood = null;
+const MOOD_TIPS = {
+  great: "Tuyệt vời! Hãy ghi nhớ điều gì đã giúp hôm nay của bạn tốt như vậy, để lặp lại vào ngày khó khăn hơn.",
+  ok: "Ổn là đủ tốt rồi. Cho phép mình có một ngày bình thường, không cần lúc nào cũng xuất sắc.",
+  meh: "Những ngày lưng chừng cũng cần được ghi nhận. Thử làm một việc nhỏ bạn thích sau giờ học nhé.",
+  tired: "Cơ thể đang xin nghỉ. Ưu tiên ngủ sớm hơn hôm nay, dù chỉ 20 phút cũng đáng kể.",
+  down: "Cảm ơn bạn đã thành thật với cảm xúc của mình. Nếu có thể, hãy chia sẻ với một người bạn tin tưởng."
+};
+document.getElementById('moodRow').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.mood-btn');
+  if(!btn) return;
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedMood = btn.dataset.mood;
+});
+document.getElementById('moodSave').addEventListener('click', ()=>{
+  if(!selectedMood){ alert('Chọn một biểu tượng cảm xúc trước nhé!'); return; }
+  const note = document.getElementById('moodNote').value.trim();
+  try{
+    const log = JSON.parse(localStorage.getItem('saclai_moods')||'[]');
+    log.push({mood:selectedMood, note, ts:Date.now()});
+    localStorage.setItem('saclai_moods', JSON.stringify(log.slice(-60)));
+  }catch(e){}
+  const tipEl = document.getElementById('moodTip');
+  tipEl.textContent = MOOD_TIPS[selectedMood];
+  tipEl.classList.add('show');
+});
+
+/* ================= CHATBOT (sample capability, with scripted fallback) ================= */
+const chatToggle = document.getElementById('chatToggle');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+const chatSend = document.getElementById('chatSend');
+
+const CHAT_RULES = "Bạn là 'Trợ lý Thở', một trợ lý ấm áp giúp học sinh Việt Nam vượt qua tình trạng burnout/kiệt sức học đường. " +
+  "Luôn trả lời bằng tiếng Việt, giọng điệu ấm áp, ngắn gọn (tối đa 3-4 câu), không phán xét. " +
+  "Gợi ý các bước nhỏ (micro-steps) cụ thể học sinh có thể làm ngay. Không đưa ra chẩn đoán y khoa. " +
+  "Nếu học sinh có dấu hiệu nguy hiểm đến bản thân, khuyên các bạn liên hệ ngay người lớn tin cậy hoặc đường dây hỗ trợ tâm lý.";
+
+let chatHistory = [{role:'user', content: CHAT_RULES}];
+let sampleApi = null;
+let chatOpened = false;
+
+const SCRIPTED = [
+  {kw:['mệt','kiệt sức','burnout'], reply:"Nghe có vẻ bạn đang rất mệt. Thử dừng lại 2 phút, hít thở sâu, rồi uống một cốc nước nhé — mục Hít thở 4-7-8 phía trên có thể giúp bạn ngay bây giờ."},
+  {kw:['áp lực','stress','căng thẳng'], reply:"Áp lực học tập là có thật, và cảm giác của bạn hoàn toàn hợp lý. Bạn có thể chia nhỏ việc cần làm thành 1 việc duy nhất cho 25 phút tới không?"},
+  {kw:['buồn','chán','khóc'], reply:"Cảm ơn bạn đã chia sẻ. Bạn không cần phải ổn ngay bây giờ. Nếu có thể, hãy tìm một người bạn tin tưởng để nói chuyện trực tiếp nhé."},
+  {kw:['ngủ'], reply:"Giấc ngủ là nền tảng phục hồi. Thử đặt báo thức đi ngủ sớm hơn 20 phút tối nay, và tắt màn hình trước khi ngủ 15 phút."}
+];
+function scriptedReply(text){
+  const low = text.toLowerCase();
+  for(const s of SCRIPTED){ if(s.kw.some(k=>low.includes(k))) return s.reply; }
+  return "Bạn cứ chia sẻ thêm nhé, mình đang lắng nghe. Nếu bạn đang quá tải, thử làm bài kiểm tra Burnout phía trên để hiểu rõ hơn mức năng lượng của mình.";
+}
+
+function addBubble(text, who){
+  const b = document.createElement('div');
+  b.className = 'bubble ' + (who==='me'?'me':'bot');
+  b.textContent = text;
+  chatBody.appendChild(b);
+  chatBody.scrollTop = chatBody.scrollHeight;
+  return b;
+}
+
+async function initChat(){
+  try{
+    if(window.claude && window.claude.use){ sampleApi = await window.claude.use('sample'); }
+  }catch(e){ sampleApi = null; }
+  if(!chatBody.children.length){
+    addBubble("Chào bạn 👋 Mình là Trợ lý Thở. Bạn đang cảm thấy thế nào hôm nay?", 'bot');
+  }
+}
+
+async function sendMessage(){
+  const text = chatInput.value.trim();
+  if(!text) return;
+  addBubble(text, 'me');
+  chatInput.value='';
+  chatSend.disabled = true;
+
+  if(sampleApi){
+    chatHistory.push({role:'user', content:text});
+    const botBubble = addBubble('Đang trả lời…', 'bot');
+    try{
+      const res = await sampleApi(chatHistory, {
+        modelTier:'quick',
+        cache:false,
+        onText: ({text})=>{ botBubble.textContent = text; chatBody.scrollTop = chatBody.scrollHeight; }
+      });
+      botBubble.textContent = res.text;
+      chatHistory.push({role:'assistant', content:res.text});
+    }catch(e){
+      if(e.code==='not_granted' || e.code==='sampling_disabled' || e.code==='capability_disabled' || e.code==='capability_removed' || e.code==='not_declared'){
+        sampleApi = null;
+        botBubble.textContent = scriptedReply(text);
+      } else if(e.text){
+        botBubble.textContent = e.text;
+      } else {
+        botBubble.textContent = "Xin lỗi bạn, mình gặp chút trục trặc. Bạn thử gửi lại nhé.";
+      }
+    }
+  } else {
+    setTimeout(()=>{ addBubble(scriptedReply(text), 'bot'); }, 400);
+  }
+  chatSend.disabled = false;
+}
+
+chatToggle.addEventListener('click', ()=>{
+  chatWindow.classList.toggle('open');
+  if(!chatOpened){ chatOpened = true; initChat(); }
+});
+document.getElementById('chatClose').addEventListener('click', ()=> chatWindow.classList.remove('open'));
+chatSend.addEventListener('click', sendMessage);
+chatInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') sendMessage(); });
+
+/* ================= NAV / MISC ================= */
+document.documentElement.style.setProperty('--dummy','0'); // keep :root writable target for theme vars
+
+})();
+</script>
+</body>
+</html>
