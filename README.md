@@ -17,9 +17,6 @@ thobreathing/
 Các chức năng chính của website hiện được triển khai trong index.html.
 
 Công nghệ sử dụng
-HTML5
-CSS3
-JavaScript
 Google Fonts
 LocalStorage
 GitHub Pages
