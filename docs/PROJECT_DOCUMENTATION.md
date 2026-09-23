@@ -1,227 +1,216 @@
 # ĐỀ ÁN CHĂM SÓC SỨC KHỎE TÂM LÝ HỌC ĐƯỜNG
 # THỞ — CÙNG VƯỢT QUA BURNOUT HỌC ĐƯỜNG 🌤️
 
-> **Tài liệu toàn diện về Luồng hoạt động, Cơ sở khoa học và Kiến trúc Trợ lý Tâm lý Thở AI**  
-> *Dành cho người dùng đại chúng, học sinh, phụ huynh, giáo viên và hội đồng giám khảo chuyên môn.*
+> **Tài liệu thuyết minh tính năng, luồng trải nghiệm, cơ chế lưu trữ và các nguyên tắc hoạt động thực tế**  
+> *(Tài liệu nghiệp vụ thuần túy — Dành cho khách hàng, người thuyết trình, phụ huynh, giáo viên và ban giám khảo)*
 
 ---
 
 ## MỤC LỤC
-1. [Bối cảnh thực tiễn & Cơ sở khoa học](#1-bối-cảnh-thực-tiễn--cơ-sở-khoa-học)
-   - 1.1. Thực trạng kiệt sức học tập ở học sinh THPT
-   - 1.2. Thang đo MBI-SS (Maslach Burnout Inventory - Student Survey)
-   - 1.3. Triết lý bảo mật & Tôn trọng quyền riêng tư (No-Auth)
-2. [Bản đồ hành trình người dùng (User Journey) & Luồng hoạt động](#2-bản-đồ-hành-trình-người-dùng-user-journey--luồng-hoạt-động)
-   - 2.1. 5 bước trải nghiệm khép kín
-   - 2.2. Chi tiết các Trạm sạc năng lượng (Relief Tools)
-3. [Chuyên sâu về Trợ lý Tâm lý Thở AI (Gemini Flash)](#3-chuyên-sâu-về-trợ-lý-tâm-lý-thở-ai-gemini-flash)
-   - 3.1. Sứ mệnh & Định vị của Thở AI
-   - 3.2. Sơ đồ Kiến trúc Kỹ thuật (System Architecture & Data Flow)
-   - 3.3. Cơ chế Cá nhân hóa thông minh (Context Injection)
-   - 3.4. Công nghệ truyền phát chữ thời gian thực (SSE Streaming)
-   - 3.5. Bộ quy tắc ứng xử & Hàng rào bảo vệ an toàn (Safety Guardrails)
-   - 3.6. Các ràng buộc hệ thống & Tối ưu tài nguyên (Constraints & Token Optimization)
-4. [Thiết kế Công thái học & Trải nghiệm Người dùng (UI/UX)](#4-thiết-kế-công-thái-học--trải-nghiệm-người-dùng-uiux)
-5. [Cấu trúc Dữ liệu & Bảng tổng hợp Tính năng](#5-cấu-trúc-dữ-liệu--bảng-tổng-hợp-tính-năng)
-6. [Tổng kết & Khuyến cáo Y khoa (Disclaimer)](#6-tổng-kết--khuyến-cáo-y-khoa-disclaimer)
+1. [Tổng quan đề án & Triết lý "Vùng an toàn"](#1-tổng-quan-đề-án--triết-lý-vùng-an-toàn)
+   - 1.1. Mục tiêu cốt lõi của website
+   - 1.2. Triết lý đặc biệt: "Không cần tài khoản — Không cần đăng nhập" (No-Auth)
+2. [Bản đồ hành trình trải nghiệm (Full User Flow)](#2-bản-đồ-hành-trình-trải-nghiệm-full-user-flow)
+3. [Chi tiết từng tính năng — Ràng buộc, Nơi lưu trữ & Thời hạn Reset](#3-chi-tiết-từng-tính-năng--ràng-buộc-nơi-lưu-trữ--thời-hạn-reset)
+   - 3.1. Bài trắc nghiệm đánh giá kiệt sức học tập (MBI-SS)
+   - 3.2. Bảng thống kê cộng đồng thời gian thực (Live Stats)
+   - 3.3. Bài tập điều hòa nhịp thở 4-7-8 (Harmonious Breathing)
+   - 3.4. Đồng hồ tập trung Pomodoro (25 phút / 5 phút)
+   - 3.5. Nhật ký theo dõi cảm xúc (Mood Tracker)
+   - 3.6. Bảng kế hoạch tuần cân bằng (Weekly Planner)
+4. [Chuyên sâu về Trợ lý Tâm lý "Thở AI"](#4-chuyên-sâu-về-trợ-lý-tâm-lý-thở-ai)
+   - 4.1. Thở AI hoạt động dựa trên Logic gì?
+   - 4.2. Bộ hàng rào bảo vệ an toàn (Quy tắc 4 KHÔNG)
+   - 4.3. Các ràng buộc kỹ thuật & Lý do vì sao phải có?
+   - 4.4. Lịch sử trò chuyện được lưu ở đâu & Bao lâu thì tự xóa?
+   - 4.5. Thiết kế nút bấm Chatbot thông minh & Tinh tế
+5. [Bảng tổng hợp đối chiếu toàn bộ tính năng (Tra cứu nhanh)](#5-bảng-tổng-hợp-đối-chiếu-toàn-bộ-tính-năng-tra-cứu-nhanh)
+6. [Lời kết & Khuyến cáo Y khoa (Disclaimer)](#6-lời-kết--khuyến-cáo-y-khoa-disclaimer)
 
 ---
 
-## 1. BỐI CẢNH THỰC TIỄN & CƠ SỞ KHOA HỌC
+## 1. TỔNG QUAN ĐỀ ÁN & TRIẾT LÝ "VÙNG AN TOÀN"
 
-### 1.1. Thực trạng kiệt sức học tập ở học sinh THPT
-Áp lực thi cử, khối lượng kiến thức đồ sộ cùng kỳ vọng lớn từ gia đình đang khiến nhiều học sinh THPT rơi vào trạng thái kiệt sức học tập (**Academic Burnout**). Học sinh thường trải qua cảm giác mệt mỏi triền miên, mất động lực, tự ti và thờ ơ với việc học nhưng không biết giãi bày cùng ai hoặc sợ bị phán xét.
-
-Dự án **Thở (Tho Breathing)** ra đời như một không gian số tĩnh lặng, kết hợp hài hòa giữa **Nghiên cứu tâm lý học thực chứng** và **Trí tuệ nhân tạo hiện đại**, giúp học sinh:
-- Tự nhận diện chính xác tình trạng kiệt sức của bản thân qua thang đo khoa học.
-- Tiếp cận ngay các công cụ xoa dịu thần kinh tức thì.
-- Lắng nghe và nhận lời khuyên thấu cảm từ trợ lý Thở AI mà không lo bị lộ danh tính.
+### 1.1. Mục tiêu cốt lõi của website
+Dự án **Thở (Tho Breathing)** là một không gian số tĩnh lặng hỗ trợ học sinh THPT nhận diện và chủ động vượt qua hội chứng kiệt sức học tập (Academic Burnout). Mục tiêu lớn nhất của dự án là: **Bất kỳ học sinh nào khi cảm thấy mệt mỏi, quá tải đều có thể mở trang web lên và được xoa dịu tức thì chỉ trong vòng 30 giây.**
 
 ---
 
-### 1.2. Thang đo MBI-SS (Maslach Burnout Inventory - Student Survey)
-Dự án kế thừa và chuẩn hóa bài kiểm tra 15 câu hỏi trắc nghiệm dựa trên đề tài nghiên cứu:  
-*«Thực trạng và giải pháp khắc phục hội chứng kiệt sức học tập (Academic Burnout)»*.
+### 1.2. Triết lý đặc biệt: "Không cần tài khoản — Không cần đăng nhập" (No-Auth)
+Khác với hầu hết các ứng dụng hiện nay luôn bắt người dùng phải bấm "Đăng ký", nhập Email, Số điện thoại hoặc tạo Mật khẩu, Thở hoàn toàn **LOẠI BỎ 100% CÁC BƯỚC ĐĂNG KÝ VÀ ĐĂNG NHẬP**.
 
-Thang đo khảo sát 3 chiều kích tâm lý độc lập:
-1. **Kiệt sức cảm xúc (Emotional Exhaustion - EX - 5 câu hỏi):** Đánh giá mức độ cạn kiệt năng lượng, mệt mỏi thể chất lẫn tinh thần do việc học dồn dập.
-2. **Sự hoài nghi / Thờ ơ học tập (Cynicism - CY - 4 câu hỏi):** Đánh giá thái độ chán nản, mất hứng thú, cảm giác việc học là vô nghĩa và muốn né tránh trường lớp.
-3. **Giảm sút hiệu quả học tập cá nhân (Low Professional Efficacy - PE - 6 câu hỏi):** Đánh giá cảm giác bất lực, tự ti, cảm thấy mình không đủ năng lực để hoàn thành nhiệm vụ học tập (chiều kích này được tính điểm đảo ngược).
+- **Lý do tâm lý học đường:**  
+  Tâm lý học sinh tuổi dậy thì vô cùng nhạy cảm. Các em luôn có nỗi sợ vô hình rằng thầy cô, cha mẹ hay bạn bè cùng lớp sẽ biết mình đang bị căng thẳng, bất ổn hoặc xem mình là "khác biệt". Bất kỳ yêu cầu nào đòi hỏi thông tin cá nhân như số điện thoại hay tài khoản mạng xã hội đều sẽ tạo ra rào cản phòng thủ, khiến học sinh lập tức đóng trang web lại.
+- **Không cần đăng nhập thì hệ thống nhận diện học sinh thế nào?**  
+  Khi học sinh bắt đầu làm bài trắc nghiệm, hệ thống chỉ hỏi 2 thông tin tối giản: **Tên gọi hoặc Biệt danh** (ví dụ: "Minh", "Mây Mây") và **Năm sinh** (để biết tuổi xưng hô phù hợp). Trình duyệt trên điện thoại hoặc máy tính của học sinh sẽ tự động tạo một mã phiên ẩn riêng biệt. Nhờ đó, học sinh vẫn nhận được lời khuyên cá nhân hóa xưng hô thân mật, trong khi danh tính thật hoàn toàn được giữ kín 100%.
 
-#### Bảng Tiêu chuẩn Phân loại Burnout:
-| Mức độ phân loại | Điểm số trung bình | Biểu hiện tâm lý | Đề xuất giải pháp |
-|---|---|---|---|
-| **Mức 1: Bình thường** | < 2.00 điểm | Tâm lý cân bằng, điều hòa tốt giữa học tập và sinh hoạt. | Tiếp tục duy trì thói quen học tập và nghỉ ngơi hợp lý. |
-| **Mức 2: Nguy cơ vừa** | 2.00 – 3.49 điểm | Bắt đầu xuất hiện căng thẳng, mất tập trung, mệt mỏi rải rác. | Cần áp dụng kỹ thuật thở 4-7-8, giảm tải bài vở và chia sẻ với Thở AI. |
-| **Mức 3: Kiệt sức cao** | ≥ 3.50 điểm | Cạn kiệt năng lượng, thờ ơ, mất ngủ, áp lực đè nặng kéo dài. | Cần can thiệp khẩn cấp: Nghỉ ngơi trọn vẹn, tìm sự hỗ trợ từ gia đình, giáo viên và chuyên gia tâm lý. |
+> [!NOTE]
+> **Nguyên tắc "Vùng an toàn":** Không lưu địa chỉ nhà, không lưu trường lớp, không hỏi số điện thoại. Học sinh vào trang web ẩn danh hoàn toàn, an tâm trải lòng trung thực mà không sợ bị phán xét.
 
 ---
 
-### 1.3. Triết lý bảo mật & Tôn trọng quyền riêng tư (No-Auth)
-- Học sinh **KHÔNG CẦN ĐĂNG KÝ TÀI KHOẢN** hay cung cấp email, số điện thoại, mật khẩu.
-- Khi làm khảo sát, học sinh chỉ cần nhập Tên/Biệt danh và Năm sinh để hệ thống cá nhân hóa xưng hô.
-- Điều này loại bỏ 100% rào cản e ngại bị lộ danh tính, giúp học sinh hoàn toàn cởi mở và trung thực khi trả lời trắc nghiệm.
+## 2. BẢN ĐỒ HÀNH TRÌNH TRẢI NGHIỆM (FULL USER FLOW)
 
----
-
-## 2. BẢN ĐỒ HÀNH TRÌNH NGƯỜI DÙNG (USER JOURNEY) & LUỒNG HOẠT ĐỘNG
-
-### 2.1. 5 bước trải nghiệm khép kín
+Trải nghiệm trên website được bố trí khoa học từ trên xuống dưới theo đúng tiến trình tâm lý của một người đang mệt mỏi: *Được đón nhận nhẹ nhàng ➔ Tự nhận diện tình trạng ➔ Thấy mình không cô đơn ➔ Nhận công cụ xoa dịu ➔ Trò chuyện giãi bày nỗi lòng.*
 
 ```mermaid
-flowchart LR
-    A["Bước 1: Tiếp cận & Chạm cảm xúc<br/>(Giao diện dịu êm, Video thiên nhiên)"] --> B["Bước 2: Tự lượng giá khoa học<br/>(15 câu trắc nghiệm MBI-SS)"]
-    B --> C["Bước 3: Nhận kết quả & Live Stats<br/>(Chẩn đoán + Thống kê cộng đồng)"]
-    C --> D["Bước 4: Trạm sạc năng lượng<br/>(Thở 4-7-8, Pomodoro, Mood, Weekly)"]
-    D --> E["Bước 5: Đồng hành cùng Thở AI<br/>(Chatbot tư vấn cá nhân hóa)"]
-```
-
-1. **Bước 1: Tiếp cận & Chạm cảm xúc:** Học sinh vào trang web, được đón nhận bằng tông màu pastel thư giãn, các đốm sáng nhịp thở nhẹ nhàng (*Ambient Breathing Glow*), video thiên nhiên êm đềm và thông điệp nâng đỡ tinh thần.
-2. **Bước 2: Tự lượng giá khoa học:** Trả lời 15 câu hỏi ngắn gọn theo thang điểm từ 0 (Không bao giờ) đến 6 (Mỗi ngày). Thiết kế tối ưu trên điện thoại, thao tác chỉ mất 2-3 phút.
-3. **Bước 3: Xem kết quả chẩn đoán & So sánh cộng đồng:**
-   - Hệ thống hiển thị mức độ kiệt sức, điểm số từng khía cạnh và lời khuyên cụ thể.
-   - Bảng **Thống kê cộng đồng thời gian thực (Live Community Stats)** hiển thị tỷ lệ các bạn cùng trường/lớp đang ở các mức độ nào. Điều này tạo hiệu ứng tâm lý giải tỏa mạnh mẽ: *"Mình không hề đơn độc hay dị biệt, nhiều bạn cũng đang trải qua điều tương tự"*.
-4. **Bước 4: Sử dụng Trạm sạc năng lượng (Relief Tools):** Học sinh thực hành ngay các công cụ điều hòa tâm trạng.
-5. **Bước 5: Trò chuyện chuyên sâu cùng Thở AI:** Bấm nút Thở AI để trò chuyện, tháo gỡ từng nút thắt học tập.
-
----
-
-### 2.2. Chi tiết các Trạm sạc năng lượng (Relief Tools)
-
-- **Bài tập thở 4-7-8 (Harmonious Breathing):**  
-  *Cơ sở khoa học:* Nghiên cứu của TS. Andrew Weil (Đại học Harvard). Hít vào bằng mũi trong 4s $\rightarrow$ Giữ hơi thở trong 7s $\rightarrow$ Thở ra từ từ bằng miệng trong 8s.  
-  *Cơ chế sinh học:* Hơi thở dài kích hoạt hệ thần kinh phó giao cảm (Parasympathetic), hạ nhịp tim, giảm hormone cortisol, chặn đứng cơn hoảng loạn trước giờ kiểm tra.
-- **Đồng hồ Pomodoro Thông minh (25 phút / 5 phút):**  
-  Chia buổi học thành các đợt 25 phút tập trung cao độ và 5 phút giải lao. Giúp não bộ phục hồi dopamine, học tập bền bỉ mà không bị quá tải.
-- **Nhật ký cảm xúc (Mood Tracker):**  
-  5 biểu tượng cảm xúc (Rất tuyệt, Vui vẻ, Bình thường, Căng thẳng, Kiệt sức). Nguyên lý *"Name it to tame it"* giúp học sinh nhận diện và làm chủ cảm xúc của mình.
-- **Kế hoạch Tuần Tự động Hóa (Weekly Planner):**  
-  Bảng theo dõi thói quen 7 ngày (T2 - CN).  
-  *Điểm sáng công nghệ:* Tự động làm mới (Auto-reset) vào mỗi sáng Thứ Hai hàng tuần: hệ thống tự động xóa các dấu tích tuần cũ nhưng giữ nguyên tên các thói quen học sinh đã đặt, giúp bắt đầu tuần mới gọn gàng và đầy cảm hứng.
-
----
-
-## 3. CHUYÊN SÂU VỀ TRỢ LÝ TÂM LÝ THỞ AI (GEMINI FLASH)
-
-### 3.1. Sứ mệnh & Định vị của Thở AI
-Thở AI được định vị là **"Người bạn đồng hành tâm lý học đường"**.
-
-| Thở AI LÀ | Thở AI KHÔNG PHẢI LÀ |
-|---|---|
-| Người bạn lắng nghe thấu cảm, không phán xét. | Công cụ chẩn đoán tâm thần thay bác sĩ. |
-| Người hướng dẫn các bước hành động siêu nhỏ (Micro-steps). | Chatbot giải bài tập, làm văn hộ học sinh. |
-| Trợ lý am hiểu tình trạng kiệt sức qua bài test MBI-SS. | Chatbot bói toán, đố vui hay trả lời lan man ngoài lề. |
-
----
-
-### 3.2. Sơ đồ Kiến trúc Kỹ thuật (System Architecture & Data Flow)
-
-```
-[ Học sinh gửi tin nhắn ]
-         │
-         ▼
-[ Giao diện React Frontend ] ── Kiểm tra độ dài (Max 500 ký tự)
-         │ (HTTP POST SSE)
-         ▼
-[ Backend NestJS Gateway ]
-         │
-         ├── 🛡️ Kiểm tra Rate Limit (Chống spam: 5 tin/phút, 30 tin/ngày)
-         ├── 🧠 Bơm ngữ cảnh (Context Injection từ bài test MBI-SS)
-         └── 📦 Nén lịch sử trò chuyện (Giữ 6 tin gần nhất + Tóm tắt tin cũ)
-         │
-         ▼
-[ Google Gemini 3.6 Flash Engine ]
-         │ (Stream phản hồi)
-         ▼
-[ SSE Realtime Streamer ] ── Bắn từng chữ về màn hình học sinh ngay tức thì
-         │
-         ▼
-[ MongoDB Atlas Database ] ── Lưu trữ bảo mật (Tự động xóa sạch sau 30 ngày)
+flowchart TD
+    S1["Chặng 1: Bước vào không gian tĩnh lặng<br/>(Xem video thiên nhiên, đốm sáng nhịp thở dập dìu)"] --> S2["Chặng 2: Làm bài trắc nghiệm khoa học 15 câu (MBI-SS)<br/>(Chỉ mất 2-3 phút, bấm chọn từ 'Không bao giờ' đến 'Mỗi ngày')"]
+    S2 --> S3["Chặng 3: Nhận kết quả chẩn đoán & So sánh cộng đồng<br/>(Xem điểm cá nhân + Thống kê để thấy mình không hề đơn độc)"]
+    S3 --> S4["Chặng 4: Sử dụng Trạm sạc năng lượng tức thì<br/>(Tập thở 4-7-8, bấm giờ Pomodoro, ghi cảm xúc, lên kế hoạch tuần)"]
+    S4 --> S5["Chặng 5: Tâm sự cùng Người bạn đồng hành Thở AI<br/>(Trò chuyện thấu cảm, nhận lời khuyên nhỏ đúng bệnh)"]
 ```
 
 ---
 
-### 3.3. Cơ chế Cá nhân hóa thông minh (Context Injection)
-Khi học sinh làm xong bài khảo sát, hệ thống ghi nhớ:
-- Tên gọi / Biệt danh
-- Năm sinh / Độ tuổi
-- Điểm số từng khía cạnh (Kiệt sức cảm xúc, Hoài nghi, Giảm hiệu quả)
-- Mức độ chẩn đoán (Bình thường / Nguy cơ vừa / Kiệt sức cao)
+## 3. CHI TIẾT TỪNG TÍNH NĂNG — RÀNG BUỘC, NƠI LƯU TRỮ & THỜI HẠN RESET
 
-Khi mở khung chat, AI tự động nạp ngữ cảnh này vào "não":
-- Chào đúng tên học sinh, xưng hô gần gũi như một người anh/người chị khóa trên hoặc người bạn thân thiết.
-- Đưa ra lời khuyên "đúng bệnh":
-  - Nếu điểm **Hoài nghi** cao: AI sẽ gợi mở lại lý do học sinh bắt đầu, kết nối việc học với ước mơ cá nhân thay vì áp lực điểm số.
-  - Nếu điểm **Kiệt sức** cao: AI sẽ khuyên học sinh dừng bài vở lại, hướng dẫn thở 4-7-8 và đi ngủ sớm.
-  - Nếu điểm **Giảm sút hiệu quả** cao: AI chia nhỏ mục tiêu học tập thành các bước 10-15 phút để học sinh lấy lại sự tự tin.
-
----
-
-### 3.4. Công nghệ truyền phát chữ thời gian thực (SSE Streaming)
-- **Phương pháp cũ (Non-streaming):** Học sinh gửi tin nhắn $\rightarrow$ Hệ thống chờ AI nghĩ xong toàn bộ câu trả lời (5–8 giây) $\rightarrow$ Đột ngột hiện ra cả đoạn văn dài. Trải nghiệm này tạo cảm giác sốt ruột và máy móc.
-- **Phương pháp mới (Server-Sent Events - SSE Streaming):** Ngay khi AI xử lý từ đầu tiên (chưa đầy 0.5s), các từ ngữ sẽ lần lượt tuôn chảy trên màn hình mượt mà như có một người bạn đang ngồi gõ phím trực tiếp. Điều này tạo cảm giác kết nối ấm áp, tự nhiên và thư thái.
+### 3.1. Tính năng Bài Trắc Nghiệm Đánh Giá Kiệt Sức Học Tập (MBI-SS)
+- **Là gì và giải quyết điều gì:**  
+  Bài kiểm tra 15 câu chuẩn tâm lý học quốc tế, chia thành 3 khía cạnh: (1) Kiệt sức thể xác & cảm xúc, (2) Thái độ thờ ơ/hoài nghi việc học, (3) Cảm giác tự ti về năng lực. Kết quả chia làm 3 mức: **Bình thường**, **Nguy cơ vừa**, **Kiệt sức cao**.
+- **Lưu trữ ở đâu?**
+  - **Trên Máy chủ Đám mây trung tâm:** Chỉ lưu ẩn danh Tên/Biệt danh, Năm sinh và Điểm số 3 khía cạnh để máy chủ tổng hợp số liệu cho biểu đồ cộng đồng.
+  - **Trên Thiết bị của học sinh (Bộ nhớ trình duyệt web):** Lưu lại kết quả để mỗi khi học sinh mở web ra là thấy ngay điểm của mình mà không cần làm lại từ đầu; đồng thời chuyển điểm số này cho Chatbot Thở AI hiểu tình trạng của bạn.
+- **Bao lâu thì hết hạn (Reset) & Lý do vì sao?**
+  - **Thời hạn hiệu lực: Đúng 7 ngày.**
+  - **Lý do khoa học:** Tâm lý học sinh biến động theo từng tuần học. Kết quả kiểm tra của tuần thi cử căng thẳng không thể đại diện cho tuần sau khi đã thi xong. Hết 7 ngày, hệ thống sẽ tự làm mới để nhắc học sinh đánh giá lại tâm trạng tuần mới.
+  - **Quyền chủ động:** Trên màn hình luôn hiển thị rõ dòng chữ: *"Hiệu lực kết quả: Đến ngày... (còn X ngày)"*. Học sinh có thể bấm nút **"Làm lại khảo sát"** bất cứ lúc nào nếu muốn đánh giá lại ngay lập tức mà không cần đợi hết 7 ngày.
 
 ---
 
-### 3.5. Bộ quy tắc ứng xử & Hàng rào bảo vệ an toàn (Safety Guardrails)
-Hệ thống được thiết lập bộ chỉ dẫn đạo đức nghiêm ngặt (System Instructions):
-1. **Không chẩn đoán y khoa:** Khi phát hiện học sinh có dấu hiệu rối loạn tâm thần nặng hoặc suy nghĩ tiêu cực cực đoan (tự hại), Thở AI lập tức ngừng khuyên nhủ chủ quan, hiển thị thông điệp khẩn cấp và cung cấp số điện thoại đường dây nóng bảo vệ trẻ em và tư vấn tâm lý (Tổng đài 111 hoặc 1900 6233).
-2. **Không làm hộ bài tập:** Từ chối lịch sự mọi yêu cầu giải toán, viết văn hộ.
-3. **Không khuyên sáo rỗng:** Tuyệt đối không dùng những câu vô thưởng vô phạt như *"Cố gắng lên"* hay *"Đừng buồn nữa"*. Thay vào đó, AI hướng dẫn các hành động siêu nhỏ: *"Bây giờ bạn hãy uống một ngụm nước ấm", "Hãy duỗi thẳng hai tay ra sau lưng trong 30 giây"*.
-4. **Giới hạn phạm vi học đường:** Từ chối các chủ đề độc hại, chính trị, cờ bạc.
+### 3.2. Tính năng Bảng Thống Kê Cộng Đồng Thời Gian Thực (Live Stats)
+- **Là gì và giải quyết điều gì:**  
+  Hiển thị tỷ lệ phần trăm học sinh trong trường/cộng đồng đang ở mức Bình thường, Nguy cơ vừa hay Kiệt sức cao. Giúp học sinh nhận ra mình không cô đơn, giảm bớt tâm lý mặc cảm tự ti.
+- **Lưu trữ & Làm mới:**  
+  Dữ liệu tự động cập nhật ngay lập tức từ máy chủ trung tâm mỗi khi có một bạn học sinh nộp bài khảo sát mới.
 
 ---
 
-### 3.6. Các ràng buộc hệ thống & Tối ưu tài nguyên (Constraints & Token Optimization)
+### 3.3. Tính năng Điều Hòa Nhịp Thở 4-7-8 (Harmonious Breathing)
+- **Là gì và giải quyết điều gì:**  
+  Vòng tròn đồ họa phập phồng dẫn nhịp theo phương pháp của Đại học Harvard: *Hít vào bằng mũi 4 giây ➔ Giữ hơi 7 giây ➔ Thở ra từ từ bằng miệng 8 giây*. Kích hoạt hệ thần kinh phó giao cảm, hạ nhịp tim và huyết áp, cắt đứt cơn hoảng loạn tức thì trước giờ thi.
+- **Lưu trữ & Ràng buộc:**  
+  Không lưu trữ bất kỳ dữ liệu nào, không giới hạn số lần tập. Nút bấm được căn giữa ngay dưới vòng tròn thở để học sinh thao tác bằng một tay dễ dàng trên điện thoại.
 
-| Ràng buộc (Constraint) | Thông số kỹ thuật | Lý do thiết kế (Dễ hiểu) |
+---
+
+### 3.4. Tính năng Đồng Hồ Tập Trung Pomodoro (25 phút / 5 phút)
+- **Là gì và giải quyết điều gì:**  
+  Chia buổi học thành các đợt 25 phút tập trung sâu và 5 phút nghỉ ngơi ngắn. Giúp não bộ học sinh không bị cạn kiệt năng lượng, ngăn chặn hiện tượng kiệt sức tích tụ.
+- **Lưu trữ & Ràng buộc:**  
+  Chạy trực tiếp trên thiết bị, có chuông âm thanh êm dịu khi hết giờ và hiệu ứng pháo hoa khích lệ tinh thần khi hoàn thành phiên học.
+
+---
+
+### 3.5. Tính năng Nhật Ký Theo Dõi Cảm Xúc (Mood Tracker)
+- **Là gì và giải quyết điều gì:**  
+  Cho phép học sinh chọn 1 trong 5 biểu tượng cảm xúc (Rất tuyệt, Vui vẻ, Bình thường, Căng thẳng, Kiệt sức) và bấm lưu lại. Giúp học sinh học cách gọi tên và làm chủ cảm xúc của mình (*"Name it to tame it"*).
+- **Lưu trữ ở đâu?**  
+  Lưu hoàn toàn trên thiết bị của học sinh (Bộ nhớ trình duyệt web). Không ai khác có thể xem được.
+- **Bao lâu thì làm mới?**  
+  Mỗi ngày học sinh có thể vào chọn lại cảm xúc của ngày hôm đó để theo dõi xem tâm trạng của mình trong tuần đang đi lên hay đi xuống.
+
+---
+
+### 3.6. Tính năng Kế Hoạch Tuần Cân Bằng (Weekly Planner)
+- **Là gì và giải quyết điều gì:**  
+  Bảng phân bổ thói quen lành mạnh trong 7 ngày (từ Thứ Hai đến Chủ Nhật). Học sinh có thể tự gõ tên thói quen (như: *Ngủ trước 23h, Uống đủ nước, Tập thể dục 15p...*) và tích chọn mỗi ngày khi hoàn thành. Trên máy tính hiển thị bảng 7 cột, trên điện thoại hiển thị thẻ thông minh với 7 nút tròn (T2..CN), ngày hôm nay được làm nổi bật để chạm tích cực nhanh.
+- **Lưu trữ ở đâu?**  
+  Lưu hoàn toàn trên thiết bị cá nhân của học sinh (Bộ nhớ trình duyệt web).
+- **Bao lâu thì làm mới (Reset) & Điểm đặc biệt thông minh:**
+  - **TỰ ĐỘNG LÀM MỚI VÀO MỖI SÁNG THỨ HAI HÀNG TUẦN:** Khi bước sang tuần mới, hệ thống tự động xóa sạch các dấu tích của tuần cũ, **NHƯNG GIỮ NGUYÊN TẤT CẢ TÊN CÁC THÓI QUEN** mà học sinh đã gõ. Học sinh không mất công gõ lại từ đầu, sẵn sàng bước vào tuần mới với một trang giấy mới tinh khôi!
+  - **Nút làm mới chủ động:** Có sẵn nút **"Làm mới tuần"** để học sinh bấm xóa tích bất cứ lúc nào nếu muốn bắt đầu lại giữa tuần.
+
+---
+
+## 4. CHUYÊN SÂU VỀ TRỢ LÝ TÂM LÝ "THỞ AI"
+
+Chatbot Thở AI là tính năng nhận được nhiều sự quan tâm nhất của dự án. Đây không phải là một con bot giải toán hay trả lời tự động thông thường, mà được thiết kế như một **Chuyên viên tư vấn tâm lý học đường thấu cảm**, hoạt động dựa trên các nguyên lý hành vi đặc thù:
+
+### 4.1. Thở AI hoạt động dựa trên Logic gì?
+Điểm mấu chốt tạo nên sự khác biệt của Thở AI là: **AI ĐÃ HIỂU BẠN TRƯỚC KHI BẠN KỊP LÊN TIẾNG.**
+
+1. **Đọc hiểu hồ sơ tâm lý tự động:**  
+   Trước khi mở chat, học sinh đã hoàn thành bài trắc nghiệm 15 câu. Thở AI sẽ tự động đọc hồ sơ này để biết: Học sinh tên là gì, bao nhiêu tuổi, điểm Kiệt sức cảm xúc cao hay điểm Hoài nghi cao.
+2. **Kê đơn lời khuyên "đúng bệnh":**
+   - Nếu học sinh có điểm **Kiệt sức cảm xúc cao:** AI hiểu rằng bạn đang mệt rã rời về thể xác. AI sẽ khuyên bạn gập sách lại, hướng dẫn thở 4-7-8, uống nước ấm và giục đi ngủ trước 23h.
+   - Nếu học sinh có điểm **Hoài nghi việc học cao:** AI hiểu rằng bạn đang chán nản, thấy việc học vô nghĩa. AI sẽ không ép bạn học, mà gợi mở về ước mơ ban đầu, khơi gợi lại niềm vui nho nhỏ trong môn học bạn từng yêu thích.
+   - Nếu học sinh có điểm **Tự ti năng lực cao:** AI sẽ chia nhỏ bài học thành từng mẩu ngắn 10-15 phút để bạn giải quyết từng phần, lấy lại sự tự tin từng bước một.
+3. **Phương pháp "Hành động siêu nhỏ" (Micro-steps):**  
+   Tuyệt đối không nói những câu sáo rỗng vô thưởng vô phạt như *"Cố gắng lên"* hay *"Đừng buồn nữa"*. Thay vào đó, AI hướng dẫn các việc có thể làm ngay trong 1 phút (ví dụ: đứng dậy vươn vai, rửa mặt bằng nước mát, nghe một bài nhạc êm).
+
+---
+
+### 4.2. Bộ Hàng Rào Bảo Vệ An Toàn (Quy tắc 4 KHÔNG)
+
+1. **KHÔNG chẩn đoán bệnh tâm thần:**  
+   Thở AI khẳng định mình là người bạn lắng nghe, không phải bác sĩ. Khi phát hiện học sinh có dấu hiệu rối loạn tâm lý nghiêm trọng hoặc suy nghĩ tiêu cực nguy hiểm (tự hại), AI sẽ lập tức từ chối khuyên bừa và hiển thị ngay số **Tổng đài Quốc gia Bảo vệ Trẻ em (111)** hoặc **Tổng đài Tư vấn Tâm lý (1900 6233)** kèm lời khuyên chia sẻ với cha mẹ.
+2. **KHÔNG giải bài tập hộ:**  
+   Nếu học sinh dán đề toán, đề văn vào nhờ làm hộ, Thở AI sẽ từ chối khéo léo, nhắc nhở rằng AI ở đây để giúp bạn bình tâm và tìm lại phương pháp học, chứ không làm bài thay bạn.
+3. **KHÔNG trả lời chuyện ngoài lề:**  
+   Từ chối mọi câu hỏi lệch lạc về chính trị, cờ bạc, bói toán hay nội dung độc hại.
+4. **KHÔNG nói dài dòng gây ngợp:**  
+   Câu trả lời luôn ngắn gọn, ngắt dòng thoáng đãng, chia thành các gạch đầu dòng rõ ràng để người đang mệt mỏi đọc cảm thấy dễ chịu nhất.
+
+---
+
+### 4.3. Các Ràng Buộc Kỹ Thuật (Constraints) & Lý Do Thực Tế Vì Sao Phải Có
+
+| Ràng buộc (Constraint) | Quy định cụ thể | Lý do vì sao phải có? (Giải thích bình dân) |
 |---|---|---|
-| **Giới hạn tin nhắn theo ngày (Daily Cap)** | Tối đa **30 tin / ngày / người** | Tránh việc học sinh bị "nghiện chat" với AI thâu đêm thay vì đi ngủ nghỉ ngơi thật sự; đồng thời kiểm soát chi phí token. |
-| **Giới hạn tốc độ gửi (Rate Limit)** | Tối đa **5 tin / phút** | Ngăn chặn kẻ xấu dùng phần mềm tự động bắn tin liên tục làm treo hệ thống. |
-| **Giới hạn độ dài tin nhắn (Input Limit)** | Tối đa **500 ký tự / tin** | Hướng học sinh đúc kết cảm xúc súc tích, tránh việc dán nguyên một bài văn dài làm tràn bộ nhớ AI. |
-| **Giới hạn độ dài câu trả lời (Output Limit)** | Tối đa **512 token (~300 từ)** | Giúp câu trả lời ngắn gọn, ngắt dòng thoáng đãng, dễ đọc trên màn hình điện thoại mà không thấy "ngợp chữ". |
-| **Nén lịch sử hội thoại (Context Compression)** | 6 tin gần nhất + Tóm tắt tin cũ | Giúp AI vẫn nhớ mạch trò chuyện cũ mà không phải gửi lại hàng nghìn từ mỗi lượt hỏi đáp, tiết kiệm 70% lượng token. |
-| **Thời hạn lưu trữ dữ liệu (Data Expiration)** | Khảo sát: **7 ngày**<br/>Lịch sử chat: **30 ngày** | Sau thời hạn trên, cơ sở dữ liệu MongoDB tự động xóa vĩnh viễn (TTL Index), không ai có thể xem lại, bảo đảm quyền riêng tư tuyệt đối cho học sinh. |
+| **Giới hạn tin nhắn theo ngày** | Tối đa **30 câu / ngày / bạn** | 1. **Lý do tâm lý:** Tránh để học sinh "nghiện chat" thâu đêm với máy móc thay vì đi ngủ thật sự.<br/>2. **Lý do công bằng:** Tránh việc một vài bạn dùng quá nhiều làm cạn kiệt tài nguyên hệ thống.<br/>*(Có đồng hồ đếm ngược công khai trên đầu khung chat: "Hôm nay: còn X/30 tin")*. |
+| **Giới hạn chống spam** | Tối đa **5 câu / phút** | Ngăn chặn kẻ xấu hoặc phần mềm tự động bắn tin liên tục làm máy chủ bị đơ hay quá tải. |
+| **Độ dài tin nhắn của bạn** | Tối đa **500 chữ / câu** | Khuyến khích học sinh đúc kết cảm xúc ngắn gọn, tránh việc dán nguyên một bài văn dài làm tràn bộ nhớ AI. |
+| **Độ dài câu trả lời của AI** | Tối đa **khoảng 300 từ** | Giữ câu trả lời súc tích, ngắt dòng thoáng, dễ đọc trên màn hình điện thoại mà không thấy "ngợp chữ". |
+| **Hiệu ứng chữ chạy mượt mà** | Phát từng chữ tức thì | Thay vì để học sinh phải chờ quay vòng 5-8 giây rồi đùng một cái hiện cả đoạn văn dài, chữ sẽ hiện ra từng từ như có một người bạn đang ngồi gõ phím trực tiếp. |
 
 ---
 
-## 4. THIẾT KẾ CÔNG THÁI HỌC & TRẢI NGHIỆM NGƯỜI DÙNG (UI/UX)
-
-- **Cố định nút Chatbot bên phải (Smart Pinned FAB):**  
-  Nút Thở AI tròn nổi được neo chắc chắn ở mép phải màn hình, mặc định góc dưới bên phải (`bottom: 24px`, `right: 16px/24px`). Người dùng có thể kéo trượt lên/xuống dọc mép phải để tránh che khuất nội dung trang, nhưng nút **không bao giờ bị trôi ra giữa màn hình hay sang mép trái** khi đổi kích thước màn hình.
-- **Loại bỏ chữ "Beta":**  
-  Giao diện chat mang tính chính thức, trang trọng và đáng tin cậy.
-- **Xóa bỏ hoàn toàn thanh cuộn ngang trên điện thoại (No Horizontal Scroll):**  
-  Trang web được khóa tràn mép ngang 100%, vuốt chạm bằng 1 ngón tay trên điện thoại mượt mà, các nút hành động được căn giữa hài hòa.
-- **Menu đỉnh luôn hiển thị (Fixed Header):**  
-  Thanh điều hướng luôn ghim chắc chắn trên đỉnh màn hình khi cuộn trang, giúp học sinh chuyển đổi giữa các trạm sạc nhanh chóng.
+### 4.4. Lịch Sử Trò Chuyện Được Lưu Ở Đâu & Bao Lâu Thì Tự Xóa?
+- **Lưu trữ ở đâu?**  
+  Lịch sử đoạn chat được lưu trên Máy chủ Đám mây bảo mật được mã hóa. Điều này giúp học sinh dù vô tình tải lại trang web hoặc đóng trình duyệt thì khi mở lại vẫn thấy cuộc trò chuyện dang dở của mình mà không bị mất.
+- **TỰ ĐỘNG XÓA SỔ VĨNH VIỄN SAU 30 NGÀY:**
+  - **Cơ chế:** Sau 30 ngày kể từ tin nhắn cuối cùng, hệ thống máy chủ sẽ tự động xóa sạch toàn bộ lịch sử trò chuyện. Dữ liệu một khi đã bị xóa sẽ biến mất vĩnh viễn, không thể phục hồi.
+  - **Lý do bảo mật:** Những lời tâm sự, nỗi lòng của học sinh là thông tin riêng tư tuyệt đối. Việc tự động xóa sau 30 ngày đảm bảo không ai (kể cả quản trị viên hệ thống) có thể xem lại nhật ký trò chuyện của các em.
+  - **Nút tự tay xóa ngay:** Trong khung chat có sẵn biểu tượng thùng rác. Học sinh có thể tự tay bấm xóa sạch toàn bộ cuộc trò chuyện bất cứ lúc nào.
 
 ---
 
-## 5. CẤU TRÚC DỮ LIỆU & BẢNG TỔNG HỢP TÍNH NĂNG
-
-### Các bộ sưu tập dữ liệu (MongoDB Collections):
-1. **`surveys`**: Lưu trữ bài khảo sát MBI-SS (Tên/Biệt danh, Năm sinh, Điểm số EX, CY, PE, Mức độ Burnout). Dùng cho thuật toán tổng hợp thống kê cộng đồng.
-2. **`chatbot_sessions`**: Lưu metadata của phiên trò chuyện, liên kết với điểm khảo sát, tự hủy sau 30 ngày.
-3. **`chatbot_messages`**: Lưu trữ các tin nhắn hỏi-đáp, tự hủy sau 30 ngày.
-4. **`chatbot_rate_limits`**: Lưu số lượng tin nhắn trong ngày của từng IP, tự động làm mới sau 24 giờ.
-
-### Biện pháp An ninh & Tối ưu hóa:
-- **Helmet HTTP Security**: Bảo vệ các tiêu đề kết nối web, chống tấn công giả mạo và clickjacking.
-- **NestJS Throttler**: Giới hạn tần suất gọi API từ bên ngoài, ngăn chặn các cuộc tấn công từ chối dịch vụ (DDoS).
-- **Healthcheck & Giữ thức 24/7**: Tích hợp endpoint `/api/health` cực nhẹ kết hợp dịch vụ giám sát UptimeRobot, giúp ứng dụng không bao giờ bị rơi vào trạng thái ngủ đông trên máy chủ miễn phí.
+### 4.5. Thiết Kế Nút Bấm Chatbot Thông Minh & Tinh Tế
+- **Cố định mép phải màn hình:**  
+  Nút Thở AI tròn nổi luôn được neo chắc chắn ở mép phải màn hình, vị trí mặc định ở góc dưới bên phải (thuận tiện nhất cho ngón tay cái khi cầm điện thoại và con chuột khi dùng máy tính).
+- **Cho phép kéo trượt dọc:**  
+  Nếu nút bấm vô tình che mất chữ hay hình ảnh trên trang web, học sinh có thể dùng ngón tay kéo trượt nó lên trên hoặc xuống dưới dọc theo mép phải. Nút được giới hạn an toàn: không bao giờ che thanh menu ở trên và không bao giờ trôi mất khỏi màn hình ở dưới.
+- **Không bao giờ bị nhảy lệch:**  
+  Dù học sinh có xoay ngang điện thoại hay đổi kích thước cửa sổ máy tính, nút bấm luôn bám chặt vào mép phải, không bao giờ bị nhảy ra giữa màn hình hay kẹt sang mép trái.
+- **Bỏ chữ "Beta":**  
+  Tiêu đề khung chat chỉ hiển thị trang trọng *"Thở AI"* cùng thông điệp *"Đồng hành tâm lý học đường"*, tạo sự tin cậy và an tâm.
 
 ---
 
-## 6. TỔNG KẾT & KHUYẾN CÁO Y KHOA (DISCLAIMER)
+## 5. BẢNG TỔNG HỢP ĐỐI CHIẾU TOÀN BỘ TÍNH NĂNG (TRA CỨU NHANH)
 
-Đề án **«Thở — Cùng vượt qua Burnout học đường»** là sự giao thoa nhân văn giữa Khoa học Tâm lý và Công nghệ Phần mềm. Dự án cung cấp một điểm tựa tinh thần kín đáo, ấm áp và khoa học, tiếp sức cho các em học sinh vững vàng vượt qua những giai đoạn thi cử căng thẳng nhất.
+| Tên Tính Năng | Cần Đăng Nhập? | Lưu Ở Đâu? | Thời Hạn Reset / Xóa | Lý Do Thiết Kế |
+|---|---|---|---|---|
+| **Bài test Burnout 15 câu (MBI-SS)** | **KHÔNG** (Chỉ cần Tên & Năm sinh) | Máy chủ trung tâm & Bộ nhớ máy học sinh | **Hết hạn sau 7 ngày** (hoặc bấm làm lại ngay) | Tâm lý học sinh thay đổi theo từng tuần học; cần đánh giá lại cho tuần mới. |
+| **Bảng Thống kê Cộng đồng** | **KHÔNG** | Máy chủ trung tâm | Cập nhật liên tục theo thời gian thực | Học sinh nhìn vào thấy được mình không hề đơn độc. |
+| **Bài tập thở 4-7-8** | **KHÔNG** | Không lưu trữ | Không giới hạn | Kích hoạt hệ thần kinh phó giao cảm, hạ nhịp tim lập tức. |
+| **Đồng hồ Pomodoro** | **KHÔNG** | Chạy trên máy học sinh | Tự làm mới sau mỗi chu kỳ 25p / 5p | Chống quá tải não bộ, hồi phục dopamine. |
+| **Nhật ký Cảm xúc (Mood Tracker)** | **KHÔNG** | Bộ nhớ máy học sinh | Chọn lại mỗi ngày mới | Giúp học sinh tự gọi tên và làm chủ cảm xúc. |
+| **Kế hoạch Tuần (Weekly Planner)** | **KHÔNG** | Bộ nhớ máy học sinh | **TỰ ĐỘNG RESET SÁNG THỨ HAI** (Giữ tên thói quen) | Tạo trang giấy mới đầu tuần mà không bắt học sinh phải gõ lại tên thói quen. |
+| **Trợ lý Tâm lý Thở AI** | **KHÔNG** | Máy chủ bảo mật mã hóa | **TỰ ĐỘNG XÓA SAU 30 NGÀY** (hoặc bấm thùng rác) | Bảo mật tuyệt đối nhật ký tâm sự; giới hạn 30 câu/ngày để nhắc đi ngủ sớm. |
+
+---
+
+## 6. LỜI KẾT & KHUYẾN CÁO Y KHOA (DISCLAIMER)
+
+Website **Thở — Cùng vượt qua Burnout học đường** được tạo ra bằng tất cả sự thấu hiểu và trân trọng đối với những áp lực mà các bạn học sinh THPT đang gánh vác. Mỗi tính năng, từng nút bấm, từng khoảng thời gian giới hạn đều được tính toán kỹ lưỡng vì lợi ích sức khỏe lâu dài của học sinh.
 
 > [!WARNING]
-> **KHUYẾN CÁO Y KHOA & MIỄN TRỪ TRÁCH NHIỆM (DISCLAIMER):**  
-> Các thông tin tự đánh giá và phản hồi của Thở AI chỉ mang tính chất tham khảo, giáo dục tâm lý và nâng cao nhận thức cộng đồng. Website **không thay thế** cho các chẩn đoán y khoa chuyên sâu, phác đồ điều trị hay sự can thiệp của bác sĩ tâm thần. Khi cảm thấy kiệt sức nghiêm trọng hoặc có các dấu hiệu suy giảm sức khỏe tâm thần kéo dài, học sinh cần tìm đến sự trợ giúp của gia đình, thầy cô giáo và chuyên gia y tế.
+> **KHUYẾN CÁO QUAN TRỌNG DÀNH CHO NGƯỜI DÙNG:**  
+> Các công cụ trên website và trợ lý Thở AI chỉ mang tính chất nâng đỡ tinh thần, giáo dục kỹ năng sống và phòng ngừa sớm. Website **KHÔNG thay thế** cho việc chẩn đoán hay điều trị y khoa của bác sĩ chuyên khoa tâm thần. Khi cảm thấy quá sức chịu đựng, học sinh hãy mạnh dạn chia sẻ với người lớn hoặc gọi **Tổng đài Quốc gia Bảo vệ Trẻ em 111** để được hỗ trợ kịp thời.
 
 ---
 
-**BAN PHÁT TRIỂN ĐỀ ÁN THỞ**  
+**NHÓM PHÁT TRIỂN ĐỀ ÁN THỞ**  
 *«Hít một hơi thật sâu, thở ra thật chậm. Bạn đang làm rất tốt rồi!»* 🌤️
