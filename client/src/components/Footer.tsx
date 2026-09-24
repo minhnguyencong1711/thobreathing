@@ -43,12 +43,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPoster }) => {
                   Bấm giờ Pomodoro
                 </a>
               </li>
-                {/* <li>
-                  <a href="#form" className="hover:text-white transition-colors">
-                    Góp ý
-                  </a>
-                </li> */}
-              </ul>
+              <li>
+                <a href="#form" className="hover:text-white transition-colors">
+                  Góp ý
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 

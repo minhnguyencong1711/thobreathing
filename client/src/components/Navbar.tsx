@@ -37,8 +37,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPoster }) => {
     { label: 'Bấm giờ', href: '#timer' },
     { label: 'Trạm sạc', href: '#spots' },
     { label: 'Thư giãn', href: '#relief' },
-    // Tạm thời comment khảo sát qua form
-    // { label: 'Góp ý', href: '#form' },
+    { label: 'Góp ý', href: '#form' },
   ];
 
   return (

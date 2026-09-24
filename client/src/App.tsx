@@ -76,8 +76,7 @@ export const App: React.FC = () => {
         <CalmingVideo />
         <WeeklyPlanner />
         <ReliefTools />
-        {/* Tạm thời ẩn phần khảo sát Google Form theo yêu cầu */}
-        {/* <GoogleFormSection /> */}
+        <GoogleFormSection />
       </main>
 
       <Footer onOpenPoster={() => setPosterOpen(true)} />

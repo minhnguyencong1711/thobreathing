@@ -2,6 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Bot, User } from 'lucide-react';
 import { ChatMessage } from '../../types/chatbot';
+import { TypingIndicator } from './TypingIndicator';
 
 interface MessageBubbleProps {
   message: ChatMessage;
@@ -9,6 +10,7 @@ interface MessageBubbleProps {
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   const isUser = message.role === 'user';
+  const isStreamingPending = !isUser && message.isStreaming && !message.content;
 
   // Format giờ gửi
   const timeFormatted = message.createdAt
@@ -17,6 +19,18 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         minute: '2-digit',
       })
     : '';
+
+  // Khi bot đang chờ stream chunk đầu tiên -> hiển thị hiệu ứng 3 chấm nảy (TypingIndicator)
+  if (isStreamingPending) {
+    return (
+      <div className="flex gap-2.5 items-end my-3 flex-row animate-in fade-in duration-200">
+        <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-white shadow-xs bg-gradient-to-tr from-secondary to-primary">
+          <Bot className="w-4 h-4" />
+        </div>
+        <TypingIndicator />
+      </div>
+    );
+  }
 
   return (
     <div className={`flex gap-2.5 items-end my-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
@@ -45,6 +59,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
           ) : (
             <div className="prose prose-sm max-w-none text-body-text prose-p:my-1.5 prose-headings:my-2 prose-ul:my-1.5 prose-li:my-0.5 font-normal">
               <ReactMarkdown>{message.content}</ReactMarkdown>
+              {message.isStreaming && (
+                <span className="inline-block w-1.5 h-3.5 bg-primary/70 ml-1 animate-pulse align-middle" />
+              )}
             </div>
           )}
         </div>

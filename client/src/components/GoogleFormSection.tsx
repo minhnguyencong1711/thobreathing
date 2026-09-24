@@ -17,7 +17,7 @@ export const GoogleFormSection: React.FC = () => {
 
         <div className="mt-8 rounded-3xl overflow-hidden shadow-soft-lg border border-black/10 bg-white">
           <iframe
-            src="https://docs.google.com/forms/d/e/933KkALPQFv678Af7/viewform?embedded=true"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSecFh2FnEH6DL9J4VPXStrJb5uTiRZhQ6fi5bAk3V8QyUELfA/viewform?embedded=true"
             title="Google Form khảo sát góp ý"
             className="w-full h-[750px] border-0 block"
           >

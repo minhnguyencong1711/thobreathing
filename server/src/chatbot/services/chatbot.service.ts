@@ -76,6 +76,8 @@ export class ChatbotService {
       generationConfig: {
         maxOutputTokens: CHATBOT_MAX_OUTPUT_TOKENS,
         temperature: CHATBOT_TEMPERATURE,
+        // @ts-ignore - Disable internal reasoning/thinking tokens to prevent cutting off responses
+        thinkingConfig: { thinkingBudget: 0 },
       },
       systemInstruction: systemPrompt,
     });
