@@ -15,7 +15,7 @@ import { AppController } from './app.controller';
     // Biến môi trường .env
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env', '../.env'],
+      envFilePath: ['.env', 'server/.env', '../.env'],
     }),
 
     // Kết nối MongoDB Atlas (hoặc Local MongoDB)
