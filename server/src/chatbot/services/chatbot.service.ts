@@ -7,7 +7,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 import {
   CHATBOT_FULL_HISTORY_COUNT,
@@ -43,7 +43,14 @@ export class ChatbotService {
   ) {}
 
   // ─── Main: Send Message (SSE Streaming) ───────────────────────────────────
-  async sendMessageStream(dto: SendMessageDto, ip: string, res: Response): Promise<void> {
+  async sendMessageStream(dto: SendMessageDto, ip: string, res: Response, req?: Request): Promise<void> {
+    let isClientDisconnected = false;
+    if (req) {
+      req.on('close', () => {
+        isClientDisconnected = true;
+      });
+    }
+
     // 1. Rate limit check
     const limitInfo = await this.checkAndIncrementRateLimit(ip);
 
@@ -93,17 +100,24 @@ export class ChatbotService {
 
     try {
       // Thử stream, nếu thất bại (VD: 503 spike) thì fallback sang generateContent thường
-      let result;
+      let result: any = null;
       for (let attempt = 1; attempt <= 2; attempt++) {
         try {
           result = await model.generateContentStream({ contents });
+          // BẮT BUỘC: Gắn catch vào result.response để ngăn chặn UnhandledPromiseRejection
+          // vì SDK @google/generative-ai tee stream thành 2 luồng song song.
+          if (result?.response) {
+            result.response.catch((bgErr: any) => {
+              this.logger.warn(`Handled background stream promise rejection: ${bgErr?.message}`);
+            });
+          }
           break;
         } catch (err: any) {
           if (attempt < 2 && (err?.message?.includes('503') || err?.status === 503)) {
             this.logger.warn(`Gemini 503 spike, retrying in 1s (attempt ${attempt}/2)...`);
             await new Promise(r => setTimeout(r, 1000));
           } else {
-            this.logger.warn('Stream failed, attempting generateContent fallback...');
+            this.logger.warn(`Stream attempt failed: ${err?.message}, attempting fallback...`);
             break;
           }
         }
@@ -112,66 +126,91 @@ export class ChatbotService {
       let fullContent = '';
 
       if (result && result.stream) {
-        // 7a. Stream từng chunk về client qua SSE
-        for await (const chunk of result.stream) {
-          const text = chunk.text();
+        try {
+          // 7a. Stream từng chunk về client qua SSE
+          for await (const chunk of result.stream) {
+            if (isClientDisconnected || res.destroyed || res.writableEnded) {
+              this.logger.log(`Client disconnected for session ${dto.sessionId}, aborting stream.`);
+              break;
+            }
+            let text = '';
+            try {
+              text = chunk.text();
+            } catch {
+              // Phòng hờ chunk bị filter bởi safety hoặc không có text method
+              text = chunk?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            }
+            if (text) {
+              fullContent += text;
+              this.sendSSEChunk(res, { event: 'content', chunk: text });
+            }
+          }
+        } catch (streamErr: any) {
+          this.logger.warn(`Stream iteration error: ${streamErr?.message}. Captured ${fullContent.length} chars.`);
+        }
+      }
+
+      // Nếu stream thất bại hoàn toàn hoặc chưa có nội dung, fallback sang generateContent đồng bộ
+      if (!fullContent.trim() && !isClientDisconnected && !res.writableEnded) {
+        try {
+          this.logger.log('Attempting non-streaming generateContent fallback...');
+          const fallbackRes = await model.generateContent({ contents });
+          let text = '';
+          try {
+            text = fallbackRes.response.text();
+          } catch {
+            text = fallbackRes.response?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+          }
           if (text) {
-            fullContent += text;
+            fullContent = text;
             this.sendSSEChunk(res, { event: 'content', chunk: text });
           }
+        } catch (fallbackErr: any) {
+          this.logger.error(`Fallback generateContent failed: ${fallbackErr?.message}`);
         }
-      } else {
-        const fallbackRes = await model.generateContent({ contents });
-        const text = fallbackRes.response.text();
-        fullContent = text;
-        this.sendSSEChunk(res, { event: 'content', chunk: text });
       }
 
       // Đảm bảo không bao giờ rỗng
-      if (!fullContent.trim()) {
-        try {
-          const retryRes = await model.generateContent({ contents });
-          fullContent = retryRes.response.text();
-          if (fullContent) {
-            this.sendSSEChunk(res, { event: 'content', chunk: fullContent });
-          }
-        } catch {
-          // ignore
-        }
-      }
-
-      if (!fullContent.trim()) {
+      if (!fullContent.trim() && !isClientDisconnected && !res.writableEnded) {
         fullContent = 'Chào bạn! Mình có thể giúp gì để bạn cảm thấy bớt áp lực hơn không? 🌿';
         this.sendSSEChunk(res, { event: 'content', chunk: fullContent });
       }
 
       // 8. Lưu response hoàn chỉnh + cập nhật session
-      await Promise.all([
-        this.messageModel.create({
-          sessionId: dto.sessionId,
-          role: 'model',
-          content: fullContent,
-        }),
-        this.sessionModel.updateOne(
-          { sessionId: dto.sessionId },
-          {
-            $set: { lastMessage: fullContent.substring(0, 200) },
-            $inc: { messageCount: 2 }, // user + model
-          },
-        ),
-      ]);
+      if (fullContent.trim()) {
+        await Promise.all([
+          this.messageModel.create({
+            sessionId: dto.sessionId,
+            role: 'model',
+            content: fullContent,
+          }),
+          this.sessionModel.updateOne(
+            { sessionId: dto.sessionId },
+            {
+              $set: { lastMessage: fullContent.substring(0, 200) },
+              $inc: { messageCount: 2 }, // user + model
+            },
+          ),
+        ]).catch(dbErr => this.logger.warn(`Failed to save message to DB: ${dbErr?.message}`));
+      }
 
-      // 9. Gửi event done với info rate limit
+      // 9. Gửi event done với info rate limit nếu kết nối còn khả dụng
       this.sendSSEChunk(res, {
         event: 'done',
         sessionId: dto.sessionId,
         rateLimitInfo: limitInfo,
       });
-    } catch (err) {
-      this.logger.error('Gemini stream error', err);
+    } catch (err: any) {
+      this.logger.error(`Gemini stream error: ${err?.message}`, err?.stack);
       this.sendSSEError(res, 'Thở AI đang bận, thử lại sau nhé 🙏');
     } finally {
-      res.end();
+      if (!res.writableEnded && !res.destroyed) {
+        try {
+          res.end();
+        } catch {
+          // ignore
+        }
+      }
     }
   }
 
@@ -430,12 +469,33 @@ ${userSection}
   }
 
   // ─── Private: SSE Helpers ─────────────────────────────────────────────────
-  private sendSSEChunk(res: Response, data: Record<string, unknown>): void {
-    res.write(`data: ${JSON.stringify(data)}\n\n`);
+  private sendSSEChunk(res: Response, data: Record<string, unknown>): boolean {
+    if (res.writableEnded || res.destroyed || !res.writable) {
+      return false;
+    }
+    try {
+      res.write(`data: ${JSON.stringify(data)}\n\n`);
+      return true;
+    } catch (err: any) {
+      this.logger.warn(`Failed to write SSE chunk: ${err?.message}`);
+      return false;
+    }
   }
 
   private sendSSEError(res: Response, message: string): void {
-    res.write(`data: ${JSON.stringify({ event: 'error', message })}\n\n`);
-    res.end();
+    if (!res.writableEnded && !res.destroyed && res.writable) {
+      try {
+        res.write(`data: ${JSON.stringify({ event: 'error', message })}\n\n`);
+      } catch {
+        // ignore
+      }
+    }
+    if (!res.writableEnded && !res.destroyed) {
+      try {
+        res.end();
+      } catch {
+        // ignore
+      }
+    }
   }
 }

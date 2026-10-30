@@ -13,4 +13,4 @@ export const CHATBOT_TEMPERATURE = 0.4;
 export const CHATBOT_SESSION_TTL_DAYS = 30; // TTL MongoDB session
 export const CHATBOT_SURVEY_TTL_DAYS = 7;  // TTL localStorage survey (thông báo user)
 
-export const CHATBOT_MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
+export const CHATBOT_MODEL = process.env.GEMINI_MODEL || 'gemini-3.6-flash';

@@ -14,7 +14,7 @@
     "build:client": "npm --prefix client run build",
     "build:server": "npm --prefix server run build",
     "build": "npm run install:all && npm run build:client && npm run build:server",
-    "start": "node server/dist/main",
+    "start": "node --max-old-space-size=400 server/dist/main",
     "start:server": "npm --prefix server run start:dev",
     "start:client": "npm --prefix client dev"
   },

@@ -45,8 +45,13 @@ export class ChatbotController {
       ?? req.socket?.remoteAddress
       ?? 'unknown';
 
+    // Lắng nghe lỗi socket để tránh crash do EPIPE / ERR_STREAM_DESTROYED
+    res.on('error', (err) => {
+      // Socket stream error (ví dụ client disconnect đột ngột)
+    });
+
     try {
-      await this.chatbotService.sendMessageStream(dto, ip, res);
+      await this.chatbotService.sendMessageStream(dto, ip, res, req);
     } catch (err: any) {
       // BadRequestException hoặc ForbiddenException từ rate limit
       const status = err?.status ?? 500;
@@ -55,8 +60,14 @@ export class ChatbotController {
       if (!res.headersSent) {
         res.setHeader('Content-Type', 'text/event-stream');
       }
-      res.write(`data: ${JSON.stringify({ event: 'error', message, status })}\n\n`);
-      res.end();
+      if (!res.writableEnded && !res.destroyed) {
+        try {
+          res.write(`data: ${JSON.stringify({ event: 'error', message, status })}\n\n`);
+          res.end();
+        } catch {
+          // ignore socket write failure
+        }
+      }
     }
   }
 

@@ -5,6 +5,16 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
+
+  // Bảo vệ tiến trình Node khỏi việc bị crash (Exited with status 1) do stream error hoặc unhandled rejection
+  process.on('unhandledRejection', (reason: any) => {
+    logger.error('⚠️ Unhandled Rejection intercepted:', reason?.stack || reason);
+  });
+
+  process.on('uncaughtException', (err: any) => {
+    logger.error('⚠️ Uncaught Exception intercepted:', err?.stack || err);
+  });
+
   const app = await NestFactory.create(AppModule);
 
   // Bảo mật HTTP Headers với Helmet (Đảm bảo cho phép nhúng video YouTube & Fonts)

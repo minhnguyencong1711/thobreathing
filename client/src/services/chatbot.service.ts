@@ -84,6 +84,7 @@ export const chatbotApi = {
 
       const decoder = new TextDecoder('utf-8');
       let buffer = '';
+      let hasReceivedDone = false;
 
       while (true) {
         const { done, value } = await reader.read();
@@ -101,6 +102,7 @@ export const chatbotApi = {
               if (data.event === 'content' && typeof data.chunk === 'string') {
                 onChunk(data.chunk);
               } else if (data.event === 'done') {
+                hasReceivedDone = true;
                 onDone(data.rateLimitInfo);
               } else if (data.event === 'error') {
                 onError(data.message || 'Lỗi xử lý phản hồi từ AI.');
@@ -119,11 +121,17 @@ export const chatbotApi = {
           if (data.event === 'content' && typeof data.chunk === 'string') {
             onChunk(data.chunk);
           } else if (data.event === 'done') {
+            hasReceivedDone = true;
             onDone(data.rateLimitInfo);
           }
         } catch {
           // ignore
         }
+      }
+
+      // Nếu stream kết thúc mà chưa nhận event done, tự động kết thúc trạng thái streaming
+      if (!hasReceivedDone) {
+        onDone();
       }
     } catch (err: any) {
       if (err.name === 'AbortError') {
