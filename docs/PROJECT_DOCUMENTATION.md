@@ -20,6 +20,7 @@
    - 3.5. Module Nhật ký theo dõi cảm xúc (Daily Mood Tracker)
    - 3.6. Module Kế hoạch tuần cân bằng (Weekly Habit Planner)
    - 3.7. Module Poster tuyên truyền & Khảo sát mở rộng
+   - 3.8. Module Mạng lưới trạm sạc tâm lý & Can thiệp y tế chuyên sâu
 4. [Đặc tả kiến trúc chuyên sâu Trợ lý tâm lý Thở AI](#4-đặc-tả-kiến-trúc-chuyên-sâu-trợ-lý-tâm-lý-thở-ai)
    - 4.1. Động cơ Trí tuệ Nhân tạo & Cấu hình tham số sinh (LLM Engine)
    - 4.2. Cấu trúc phản hồi chuẩn 3 bước tâm lý học đường
@@ -138,6 +139,23 @@ flowchart TD
 
 ---
 
+### 3.8. Module Mạng Lưới Trạm Sạc Tâm Lý & Can Thiệp Y Tế Chuyên Sâu
+- **Mục tiêu & Định hướng nghiệp vụ:**  
+  Xây dựng lộ trình hỗ trợ liên tục từ thư giãn nhẹ nhàng, không gian tự học tĩnh lặng đến tham vấn học đường và can thiệp y tế chuyên sâu. Bình thường hóa việc tìm kiếm trợ giúp tâm lý cho học sinh với thông điệp: *"Chăm sóc sức khỏe tinh thần là sự dũng cảm bảo vệ chính mình."*
+- **Hệ thống 6 Trạm sạc nhẹ nhàng & Hỗ trợ khẩn cấp:**  
+  - *Phòng Tham vấn Tâm lý học đường:* Hỗ trợ lắng nghe tại phòng y tế/tham vấn trường THPT, kèm nút tìm kiếm trên Google Maps.
+  - *Quán cà phê sách gần trường:* Không gian yên ắng đọc sách và viết nhật ký, kèm nút chỉ đường Google Maps tìm quán gần nhất.
+  - *Công viên cây xanh khu vực:* Giảm nhanh hormone căng thẳng cortisol qua đi dạo thiên nhiên, kèm nút mở Google Maps.
+  - *Tổng đài Quốc gia 111 & 1800 1567:* Đường dây nóng bảo vệ trẻ em và tâm lý học đường 24/7, tích hợp 2 nút bấm gọi điện trực tiếp miễn cước (`tel:111`, `tel:18001567`).
+  - *Lớp yoga & thiền cộng đồng:* Tái tạo năng lượng và thư giãn cơ bắp, kèm nút tìm lớp trên Google Maps.
+  - *Thư viện cộng đồng & Tự học:* Thư viện KHTH TP.HCM và các thư viện quận huyện, kèm nút tìm kiếm Google Maps.
+- **Điểm can thiệp y tế chuyên sâu — Bệnh viện Tâm thần TP.HCM:**  
+  - *Đơn vị chuyên môn:* Khoa Khám Tâm lý & Sức khỏe Tâm thần Vị thành niên — Bệnh viện Tâm thần TP.HCM (766 Võ Văn Kiệt, Phường 1, Quận 5).
+  - *Script chữa lành & Bình thường hóa:* Giải thích nhẹ nhàng rằng việc gặp bác sĩ chuyên khoa là lựa chọn y khoa an toàn và bình thường như khi điều trị bệnh lý thể chất, không mang tính phán xét, bảo mật 100% danh tính học sinh.
+  - *Tương tác trực tiếp:* Tích hợp nút bấm gọi trực tiếp `(028) 3923 4675`, nút mở ứng dụng chỉ đường Google Maps và **khung bản đồ tương tác nhỏ (Mini Map Embed)** trực quan ngay trên trang web.
+
+---
+
 ## 4. ĐẶC TẢ KIẾN TRÚC CHUYÊN SÂU TRỢ LÝ TÂM LÝ THỞ AI
 
 ### 4.1. Động cơ Trí tuệ Nhân tạo & Cấu hình Tham số Sinh (LLM Engine)
@@ -221,6 +239,7 @@ Nhằm duy trì ngữ cảnh trò chuyện liên tục nhưng không làm tràn 
 | **Đồng hồ Pomodoro (25 phút / 5 phút)** | **KHÔNG** | Client Local State | Sau mỗi chu kỳ 25/5 | Ngăn chặn kiệt sức não bộ, duy trì khả năng tái tạo dopamine. |
 | **Nhật ký Cảm xúc (Mood Tracker)** | **KHÔNG** | Client LocalStorage | Cập nhật mỗi ngày | Hỗ trợ học sinh định danh và quản trị cảm xúc hàng ngày. |
 | **Kế hoạch Tuần (Weekly Habit Planner)** | **KHÔNG** | Client LocalStorage | **TỰ ĐỘNG RESET SÁNG T2** (Giữ nguyên thói quen) | Tạo trang giấy mới đầu tuần mà không bắt học sinh phải nhập lại thói quen. |
+| **Mạng lưới Trạm sạc & BV Tâm thần TP.HCM** | **KHÔNG** | Liên kết trực tiếp (Maps & Tel) | Tích hợp thời gian thực | Bình thường hóa việc tìm kiếm trợ giúp tâm lý, từ thư giãn đến can thiệp y tế chuyên sâu (766 Võ Văn Kiệt). |
 | **Trợ lý Thở AI (Gemini 3.6 Flash)** | **KHÔNG** | MongoDB Atlas (Mã hóa) | **TỰ ĐỘNG XÓA SAU 30 NGÀY** (hoặc bấm thùng rác) | Bảo mật tuyệt đối nhật ký tâm sự; giới hạn 30 tin/ngày nhắc nhở ngủ đúng giờ. |
 
 ---
